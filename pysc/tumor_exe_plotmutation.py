@@ -81,8 +81,15 @@ while Janitor.n < Janitor.MAXNUM:
 
     if Janitor.n >= Janitor.MAXNUM:
         break
+        
+strmt = str(args.MTRATE)
+dstmt = strmt.replace('.', '_')
+if args.func2 == "cycle":
+    para = "c" + str(args.TUMORSPEED) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
+if args.func2 == "mortal":
+    para = "m" + str(args.ENV) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
 
-Tumor_janitor.save_heatmap_graph(pid)
+Tumor_janitor.save_heatmap_graph(para)
 Tumor_janitor.count()
 Tumor_cell.list_adjust()
 Tumor_cell.make_idlist(Janitor.field)
@@ -90,14 +97,7 @@ Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(Tumor_cell.idlist, Tumor_cell.driver_list, Plotter.POISSON)
 
 pidcsv = pid + ".csv"
-strmt = str(args.MTRATE)
-dstmt = strmt.replace('.', '_')
 Plotter.df.to_csv(pidcsv)
-if args.func2 == "cycle":
-    para = "c" + str(args.TUMORSPEED) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
-if args.func2 == "mortal":
-    para = "m" + str(args.ENV) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
-
 
 r = pr.R(use_pandas='True')
 r.assign("pid", pid)
