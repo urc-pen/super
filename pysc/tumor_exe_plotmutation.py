@@ -21,11 +21,11 @@ parser.add_argument("--SIZE", "-si", type=int, default=721)
 parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
 parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
-parser.add_argument("--ENV", "-en", default=4000)
+parser.add_argument("--ENV", "-en", default=4000, type=int)
 parser.add_argument("--MTRATE", "-mt", default=0.001, type=float)
 parser.add_argument("--INTERVAL", "-in", default=100, type=int)
-parser.add_argument("--POISSON", "-po", default=10)
-parser.add_argument("--TUMORSPEED", "-tu", default=3)
+parser.add_argument("--POISSON", "-po", default=10, type=float)
+parser.add_argument("--TUMORSPEED", "-tu", default=3, type=float)
 parser.add_argument("--func2", "-fu2", choices=["cycle", "mortal"], default="mortal")
 args = parser.parse_args()
 
@@ -81,7 +81,7 @@ while Janitor.n < Janitor.MAXNUM:
 
     if Janitor.n >= Janitor.MAXNUM:
         break
-        
+
 strmt = str(args.MTRATE)
 dstmt = strmt.replace('.', '_')
 if args.func2 == "cycle":
