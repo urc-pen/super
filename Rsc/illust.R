@@ -19,7 +19,7 @@ for (i in 1:length(tmp)) {
     rcol[tmp[i]] <- "LightGrey"
   }
 }
-hfile <-  sprintf("../pdfstore/%s_h.pdf", pid)
+hfile <-  sprintf("../pdfstore/%s_h.pdf", para)
 pdf(hfile)
 heatmap(X,col=c("LightGrey", "red"), hclustfun = function(X) { hclust(X, method = "ward.D") }, scale = c("none"), RowSideColors=rcol)
 dev.off()
@@ -27,5 +27,5 @@ dev.off()
 W <- which(apply(X, 1, mean) >= 0.05)
 S <- sample(names(W), 256, replace=F)
 X <- X[S,]
-tfile <-  sprintf("../txtstore/%s_s.txt", pid)
+tfile <-  sprintf("../txtstore/%s_s.txt", para)
 write.table(X, tfile, quote=F, row.names=T, col.names=T, sep="\t", append=F)
