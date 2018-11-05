@@ -22,7 +22,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2")
 parser.add_argument("--SIZE", "-si", type=int, default=301)
-parser.add_argument("--AVERAGE", "-av", type=float, default=15)
+parser.add_argument("--AVERAGE", "-av", type=int, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
 parser.add_argument("--MAXNUM", "-ma", type=int, default=1000)
 parser.add_argument("--ENV", "-en", default=4000, type=int)
