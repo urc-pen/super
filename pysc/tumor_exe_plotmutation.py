@@ -13,16 +13,20 @@ from Tumorcell import Tumor_cell
 from Tumorjanitor import Tumor_janitor
 from Plotter import Plotter
 import os
+import re
+homedir = os.path.abspath(os.path.dirname(__file__))
+homedir = re.sub("/pysc", "", homedir)
+
 pid = str(os.getpid())
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2")
-parser.add_argument("--SIZE", "-si", type=int, default=721)
+parser.add_argument("--SIZE", "-si", type=int, default=301)
 parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=1000)
 parser.add_argument("--ENV", "-en", default=4000, type=int)
-parser.add_argument("--MTRATE", "-mt", default=0.001, type=float)
+parser.add_argument("--MTRATE", "-mt", default=0.1, type=float)
 parser.add_argument("--INTERVAL", "-in", default=100, type=int)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 parser.add_argument("--TUMORSPEED", "-tu", default=3, type=float)
@@ -96,11 +100,14 @@ Tumor_cell.make_idlist(Janitor.field)
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(Tumor_cell.idlist, Tumor_cell.driver_list, Plotter.POISSON)
 
-pidcsv = pid + ".csv"
+pidcsv = homedir + pid + ".csv"
 Plotter.df.to_csv(pidcsv)
-
+rfile = homedir + "/Rsc/illust.R"
 r = pr.R(use_pandas='True')
-r.assign("pid", pid)
-r.assign("para", para)
-r("source(file='../Rsc/illust.R')")
+hpre = homedir + "/pdfstore/" + para
+tpre = homedir + "/txtstore/" + para
+r.assign("pidcsv", pidcsv)
+r.assign("hpre", hpre)
+r.assign("tpre", tpre)
+r("source(file='{}')".format(str(rfile)))
 os.remove(pidcsv)

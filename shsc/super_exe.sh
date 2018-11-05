@@ -2,5 +2,4 @@
 #$ -S /bin/bash
 #$ -cwd
 
-
-python ../pysc/tumor_exe_plotmutation.py
+python ../pysc/tumor_exe_plotmutation.py >&1 >&2
