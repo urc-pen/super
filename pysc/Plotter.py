@@ -84,3 +84,61 @@ class Plotter:
         df1 = pd.DataFrame(finaldict)
         df2 = df1.fillna(0)
         Plotter.df = df2.astype(int)
+
+    @classmethod
+    def write_newick(cls, idlist, celllist, timedic):
+        idlist = random.sample(idlist, 50)
+
+        new_idlist = idlist
+        length = len(new_idlist)
+        for i in range(0, length):
+            varno = new_idlist[i]
+            while varno != 1:
+                varno = math.floor(varno / 2)
+                new_idlist.append(varno)
+        new_idlist = np.sort(list(set(new_idlist)))
+        newick = "id1"
+        for i in new_idlist:
+            idx = "id" + str(i)
+            new1 = i * 2
+            new2 = i * 2 + 1
+            type1 = 0
+            type2 = 0
+            if new1 in new_idlist and new2 in new_idlist:
+                if new1 in idlist and new2 in idlist:
+                    for cell in celllist:
+                        if cell.mutation_id == new1:
+                            type1 = cell.driver_type
+                        if cell.mutation_id == new2:
+                            type2 = cell.driver_type
+                    newid = "(#" + str(type1) + "id" + str(new1) + ":" + str(timedic[new1]) + ",#" + str(type2) + "id" + str(new2) + ":" + str(timedic[new2]) + ")" + idx
+                    newick = newick.replace(idx, newid)
+                else:
+                    newid = "(id" + str(new1) + ":" + str(timedic[new1]) + ",id" + str(new2) + ":" + str(timedic[new2]) + ")" + idx
+                    newick = newick.replace(idx, newid)
+            if new1 in new_idlist and new2 not in new_idlist:
+                if new1 in idlist and new2 not in idlist:
+                    for cell in celllist:
+                        if cell.mutation_id == new1:
+                            type1 = cell.driver_type
+                    newid = "(#" + str(type1) + "id" + str(new1) + ":" + str(timedic[new1]) + ")" + idx
+                    newick = newick.replace(idx, newid)
+                else:
+                    newid = "(id" + str(new1) + ":" + str(timedic[new1]) + ")" + idx
+                    newick = newick.replace(idx, newid)
+            if new1 not in new_idlist and new2 in new_idlist:
+                if new1 not in idlist and new2 in idlist:
+                    for cell in celllist:
+                        if cell.mutation_id == new2:
+                            type2 = cell.driver_type
+                    newid = "(#" + str(type2) + "id" + str(new2) + ":" + str(timedic[new2]) + ")" + idx
+                    newick = newick.replace(idx, newid)
+                else:
+                    newid = "(id" + str(new2) + ":" + str(timedic[new2]) + ")" + idx
+                    newick = newick.replace(idx, newid)
+            else:
+                pass
+
+        newick = "(" + newick + ":0);"
+        with open("newick.txt", mode='w') as f:
+            f.write(newick)

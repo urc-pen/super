@@ -9,7 +9,8 @@ from matplotlib.colors import LinearSegmentedColormap
 
 class Tumor_cell(Cell):
     driver_list = []
-
+    timedic = {}
+    dr_type = 0
     @classmethod
     def receive_value(cls,AVERAGE, DISPERSION, ENV, MTRATE, TUMORSPEED):
         super().receive_value(AVERAGE, DISPERSION, ENV)
@@ -24,6 +25,7 @@ class Tumor_cell(Cell):
         self.driverflag = 0
         self.onenum = 0
         self.twonum = 0
+        self.driver_type = 0
 
     @classmethod
     def set_first_cell(cls, field, on):
@@ -41,13 +43,15 @@ class Tumor_cell(Cell):
         nj = self.j + Cell.mj
         cell_new = Tumor_cell(ni, nj)
         cell_new.id = len(Cell.celllist)
-        self.count += 1
         cell_new.mutation_id = self.mutation_id * 2 + 1
         self.mutation_id = self.mutation_id * 2
-        cell_new.count = self.count
+        Tumor_cell.timedic[self.mutation_id] = self.count
+        Tumor_cell.timedic[cell_new.mutation_id] = self.count
+        self.count = 0
         self.proliferation = 0
         cell_new.driver_mutation = self.driver_mutation
         cell_new.type = self.type
+        cell_new.driver_type = self.driver_type
 
         if self.driver_mutation == 0 and self.type == 1:
             self.driverflag = np.random.choice([1, 0], p=[Cell.MTRATE, 1 - Cell.MTRATE])
@@ -55,6 +59,8 @@ class Tumor_cell(Cell):
                 self.type = 2
                 self.driver_mutation = 1
                 Tumor_cell.driver_list.append(self.mutation_id)
+                Tumor_cell.dr_type += 1
+                self.driver_type = Tumor_cell.dr_type
                 self.driverflag = 0
         else:
             pass
@@ -65,6 +71,8 @@ class Tumor_cell(Cell):
                 cell_new.type = 2
                 cell_new.driver_mutation = 1
                 Tumor_cell.driver_list.append(cell_new.mutation_id)
+                Tumor_cell.dr_type += 1
+                cell_new.driver_type = Tumor_cell.dr_type
                 cell_new.driverflag = 0
         else:
             pass

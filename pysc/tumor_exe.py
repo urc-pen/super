@@ -21,16 +21,17 @@ pid = str(os.getpid())
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2")
-parser.add_argument("--SIZE", "-si", type=int, default=301)
+parser.add_argument("--SIZE", "-si", type=int, default=721)
 parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=1000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
 parser.add_argument("--ENV", "-en", default=4000, type=int)
 parser.add_argument("--MTRATE", "-mt", default=0.1, type=float)
 parser.add_argument("--INTERVAL", "-in", default=100, type=int)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 parser.add_argument("--TUMORSPEED", "-tu", default=3, type=float)
 parser.add_argument("--func2", "-fu2", choices=["cycle", "mortal"], default="mortal")
+parser.add_argument("--AROUND", "-ar", default=10, type=int)
 args = parser.parse_args()
 
 if args.SIZE % 2 != 1:
@@ -99,15 +100,23 @@ Tumor_cell.list_adjust()
 Tumor_cell.make_idlist(Janitor.field)
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(Tumor_cell.idlist, Tumor_cell.driver_list, Plotter.POISSON)
-
+Plotter.write_newick(Tumor_cell.idlist, Cell.celllist, Tumor_cell.timedic)
 pidcsv = homedir + pid + ".csv"
+newicktxt = homedir + "/pysc/newick.txt"
 Plotter.df.to_csv(pidcsv)
 rfile = homedir + "/Rsc/illust.R"
+r2file = homedir + "/Rsc/tree.R"
 r = pr.R(use_pandas='True')
+r2 = pr.R()
 hpre = homedir + "/pdfstore/" + para
 tpre = homedir + "/txtstore/" + para
+treepre = homedir + "/treestore/" + para
 r.assign("pidcsv", pidcsv)
 r.assign("hpre", hpre)
 r.assign("tpre", tpre)
 r("source(file='{}')".format(str(rfile)))
+r2.assign("newicktxt", newicktxt)
+r2.assign("treepre", treepre)
+r2("source(file='{}')".format(str(r2file)))
 os.remove(pidcsv)
+os.remove(newicktxt)

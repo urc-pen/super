@@ -193,6 +193,7 @@ class Cell:
     def waittime_minus(self):
         if self.waittime != 0:
             self.waittime -= 1
+            self.count += 1
 
     def update_heatmap(self, heatmap):
         if self.dead == 0:
