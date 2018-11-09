@@ -86,7 +86,7 @@ class Plotter:
         Plotter.df = df2.astype(int)
 
     @classmethod
-    def write_newick(cls, idlist, celllist, timedic):
+    def write_newick(cls, idlist, celllist, timedic, newicktxt):
         idlist = random.sample(idlist, 50)
 
         new_idlist = idlist
@@ -140,5 +140,5 @@ class Plotter:
                 pass
 
         newick = "(" + newick + ":0);"
-        with open("newick.txt", mode='w') as f:
+        with open(newicktxt, mode='w') as f:
             f.write(newick)

@@ -100,9 +100,9 @@ Tumor_cell.list_adjust()
 Tumor_cell.make_idlist(Janitor.field)
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(Tumor_cell.idlist, Tumor_cell.driver_list, Plotter.POISSON)
-Plotter.write_newick(Tumor_cell.idlist, Cell.celllist, Tumor_cell.timedic)
+newicktxt = homedir + "/newick.txt"
+Plotter.write_newick(Tumor_cell.idlist, Cell.celllist, Tumor_cell.timedic, newicktxt)
 pidcsv = homedir + pid + ".csv"
-newicktxt = homedir + "/pysc/newick.txt"
 Plotter.df.to_csv(pidcsv)
 rfile = homedir + "/Rsc/illust.R"
 r2file = homedir + "/Rsc/tree.R"
