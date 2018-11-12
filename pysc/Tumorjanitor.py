@@ -61,11 +61,11 @@ class Tumor_janitor(Janitor):
             print("cell{}:{}個".format(n, np.sum(Janitor.heatmap == n)))
 
     @classmethod
-    def save_heatmap_graph(cls, pid):
+    def save_heatmap_graph(cls, para):
         for n in range(1, 3):
             Janitor.heatmap[0, n - 1] = n
         Janitor.ax1.plot(Janitor.tlist, Janitor.onelist, label="1: no mutation", color=Janitor.colors[1])
         Janitor.ax1.plot(Janitor.tlist, Janitor.twolist, label="2: driver mutation", color=Janitor.colors[2])
         Janitor.ax2.imshow(Janitor.heatmap,interpolation="nearest", cmap=Janitor.cm)
-        pidpng = "../pngstore/" + pid + ".png"
+        pidpng = "../result/pngstore/" + para + ".png"
         plt.savefig(pidpng)

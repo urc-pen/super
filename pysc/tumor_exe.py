@@ -50,8 +50,6 @@ if args.func2 == "cycle":
 if args.func2 == "mortal":
     print("環境収容力:{}".format(args.ENV))
 
-
-
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.ENV, args.MTRATE, args.TUMORSPEED)
 Tumor_janitor.receive_value(args.func, args.SIZE, args.MAXNUM, args.INTERVAL)
 Janitor.set_field()
@@ -108,9 +106,9 @@ rfile = homedir + "/Rsc/illust.R"
 r2file = homedir + "/Rsc/tree.R"
 r = pr.R(use_pandas='True')
 r2 = pr.R()
-hpre = homedir + "/pdfstore/" + para
-tpre = homedir + "/txtstore/" + para
-treepre = homedir + "/treestore/" + para
+hpre = homedir + "/result/pdfstore/" + para
+tpre = homedir + "/result/txtstore/" + para
+treepre = homedir + "/result/treestore/" + para
 r.assign("pidcsv", pidcsv)
 r.assign("hpre", hpre)
 r.assign("tpre", tpre)
