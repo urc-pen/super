@@ -57,7 +57,7 @@ Janitor.set_heatmap()
 Tumor_cell_compe.set_first_cell(Janitor.field, Janitor.on)
 Tumor_janitor.first_heatmap_graph_compe()
 
-while Janitor.n < Janitor.MAXNUM and Janitor.t < 1500:
+while Janitor.n < Janitor.MAXNUM:
 
     for cell in Cell.celllist:
         if cell.dead == 0:
@@ -87,7 +87,7 @@ while Janitor.n < Janitor.MAXNUM and Janitor.t < 1500:
     Janitor.count_cell_num()
     Janitor.t += 1
 
-    if Janitor.n >= Janitor.MAXNUM or Janitor.t >= 1500:
+    if Janitor.n >= Janitor.MAXNUM:
         break
 
 if args.funcM == "mortal1":
