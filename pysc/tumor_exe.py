@@ -93,7 +93,6 @@ if args.func2 == "mortal":
     para = "m" + str(args.ENV) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
 
 Tumor_janitor.save_heatmap_graph(para)
-Tumor_janitor.count()
 Tumor_cell.list_adjust()
 Tumor_cell.make_idlist(Janitor.field)
 Plotter.receive_value(args.POISSON)
