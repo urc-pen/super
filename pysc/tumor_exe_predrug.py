@@ -3,7 +3,6 @@ import random
 import math
 import fractions
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import pyper as pr
@@ -23,10 +22,10 @@ pid = str(os.getpid())
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2")
-parser.add_argument("--SIZE", "-si", type=int, default=771)
+parser.add_argument("--SIZE", "-si", type=int, default=401)
 parser.add_argument("--AVERAGE", "-av", type=float, default=10)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=10000)
 parser.add_argument("--INTERVAL", "-in", default=10, type=int)
 parser.add_argument("--AROUND", "-ar", default=10, type=int)
 parser.add_argument("--WEIGHT", "-we", default=0.2, type=float)
@@ -84,6 +83,7 @@ while Janitor.n < Janitor.MAXNUM and Janitor.t < 1500:
         cell.update_heatmap(Janitor.heatmap)
 
     Tumor_janitor.append_cell_num()
+    Tumor_janitor.plot_heatmap_graph_compe()
     Janitor.count_cell_num()
     Janitor.t += 1
 
@@ -91,9 +91,9 @@ while Janitor.n < Janitor.MAXNUM and Janitor.t < 1500:
         break
 
 if args.funcM == "mortal1":
-    para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + ""
+    para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE)
 if args.funcM == "mortal2":
-    para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "w" + str(args.WEIGHT)
+    para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT)
 Tumor_janitor.save_heatmap_graph(para)
 
 listbinary = homedir + "/binary/" + pid + "_list.binaryfile"

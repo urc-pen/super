@@ -90,16 +90,11 @@ class Tumor_cell_compe(Cell):
                     Cell.celllist[field[on + r - k, on - r]].prolife(field)
 
     def count_around(self, heatmap):
-        self.num = 0
-        self.enemynum = 0
-        for i in range(self.i - Cell.AROUND, self.i + Cell.AROUND + 1):
-            for j in range(self.j - Cell.AROUND, self.j + Cell.AROUND + 1):
-                if i == self.i and j == self.j:
-                    continue
-                bool = (heatmap[i, j] == self.type)
-                enemybool = (heatmap[i, j] != self.type and heatmap[i, j] != 0)
-                self.num += bool
-                self.enemynum += enemybool
+        if self.dead == 0:
+            arheatmap = heatmap[self.i - Cell.AROUND:self.i + Cell.AROUND + 1, self.j - Cell.AROUND:self.j + Cell.AROUND + 1].flatten()
+            nozeroheat = arheatmap[arheatmap != 0]
+            self.num = -1 + len(nozeroheat[nozeroheat == self.type])
+            self.enemynum = len(nozeroheat[nozeroheat != self.type])
 
     def mortal1(self, field):
         if self.enemynum <= Cell.K1 and self.dead == 0:
@@ -124,7 +119,7 @@ class Tumor_cell_compe(Cell):
             pass
 
     def drugged(self, t):
-        if len(Cell.drtime_list) != 0:
+        if len(Cell.drtime_list) != 0 and self.dead == 0:
             if t >= int(Cell.drtime_list[0]) and t < int(Cell.drtime_list[1]):
                 if self.type == 1:
                     dens = 1 - (self.num + self.enemynum) / Cell.KM
