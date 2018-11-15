@@ -104,7 +104,7 @@ class Tumor_cell_compe(Cell):
 
     def mortal1(self, field):
         if self.enemynum <= Cell.K1 and self.dead == 0:
-            nE = (self.num + self.enemynum) / Cell.K2
+            nE = (self.num + self.enemynum) / Cell.K1
             nE = round(nE, 3)
             self.deathflag = np.random.choice([0, 1], p=[1 - nE, nE])
         if self.deathflag == 1:
@@ -150,9 +150,8 @@ class Tumor_cell_compe(Cell):
 
     def mortal1_drug(self, field):
         if self.dead == 0:
-            nE = (self.enemynum / Cell.K1) + self.drdeath
-            if nE >= 1:
-                nE = 1
+            nE = (self.num + self.enemynum) / Cell.K1
+            nE = round(nE, 3)
             self.deathflag = np.random.choice([0, 1], p=[1 - nE, nE])
         if self.deathflag == 1:
             self.dead = 1
@@ -163,9 +162,12 @@ class Tumor_cell_compe(Cell):
 
     def mortal2_drug(self, field):
         if self.dead == 0:
-            nE = ((self.num * Cell.WEIGHT + self.enemynum) / Cell.K2) + self.drdeath
-            if nE >= 1:
-                nE = 1
+            if self.type == 1:
+                nE = (self.num + self.enemynum * Cell.WEIGHT2) / Cell.K1
+                nE = round(nE, 3)
+            if self.type == 2:
+                nE = (self.num + self.enemynum * Cell.WEIGHT1) / Cell.K1
+                nE = round(nE, 3)
             self.deathflag = np.random.choice([0, 1], p=[1 - nE, nE])
         if self.deathflag == 1:
             self.dead = 1
