@@ -3,6 +3,7 @@ import random
 import math
 import fractions
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import pyper as pr
@@ -22,15 +23,16 @@ pid = str(os.getpid())
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2")
-parser.add_argument("--SIZE", "-si", type=int, default=777)
+parser.add_argument("--SIZE", "-si", type=int, default=501)
 parser.add_argument("--AVERAGE", "-av", type=float, default=10)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=10000)
 parser.add_argument("--INTERVAL", "-in", default=10, type=int)
 parser.add_argument("--AROUND", "-ar", default=10, type=int)
-parser.add_argument("--WEIGHT", "-we", default=0.2, type=float)
-parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal1")
-parser.add_argument("--MTRATE", "-mt", default=0.01, type=float)
+parser.add_argument("--WEIGHT1", "-we1", default=0.5, type=float)
+parser.add_argument("--WEIGHT2", "-we2", default=1.5, type=float)
+parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
+parser.add_argument("--MTRATE", "-mt", default=0.001, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="80,85,100,105")
 parser.add_argument("--EFFECT", "-ef", default=0.5, type=float)
 args = parser.parse_args()
@@ -48,9 +50,10 @@ print("競争モデル:{}".format(args.funcM))
 print("ローカルの計測範囲:{}".format(args.AROUND))
 print("薬剤耐性変異の入る確率:{}".format(args.MTRATE))
 if args.funcM == "mortal2":
-    print("同種の競争係数（<1）:{}".format(args.WEIGHT))
+    print("type1の競争係数（<1）:{}".format(args.WEIGHT1))
+    print("type2の競争係数（<1）:{}".format(args.WEIGHT2))
 
-Tumor_cell_compe.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT, args.MTRATE, args.DRUGTIMES, args.EFFECT)
+Tumor_cell_compe.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 Tumor_janitor.receive_value(args.func, args.SIZE, args.MAXNUM, args.INTERVAL)
 Janitor.set_field()
 Janitor.set_heatmap()
@@ -83,7 +86,6 @@ while Janitor.n < Janitor.MAXNUM:
         cell.update_heatmap(Janitor.heatmap)
 
     Tumor_janitor.append_cell_num()
-    Tumor_janitor.plot_heatmap_graph_compe()
     Janitor.count_cell_num()
     Janitor.t += 1
 
@@ -93,9 +95,10 @@ while Janitor.n < Janitor.MAXNUM:
 if args.funcM == "mortal1":
     para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE)
 if args.funcM == "mortal2":
-    para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT)
+    para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2)
 Tumor_janitor.save_heatmap_graph(para)
-
+Tumor_janitor.count()
+print(cell.resicount)
 listbinary = homedir + "/binary/" + pid + "_list.binaryfile"
 with open(listbinary, mode='wb') as f:
     pickle.dump(Cell.celllist, f)

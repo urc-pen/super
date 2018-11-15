@@ -61,7 +61,7 @@ class Tumor_janitor(Janitor):
     @classmethod
     def first_heatmap_graph_compe(cls):
         fig = plt.figure(figsize=(10, 5))
-        Janitor.colors = [(1, 1, 1), (0.2, 0.8, 1), (0.5, 0.8, 0.2)]
+        Janitor.colors = [(1, 1, 1), (0.2, 0.8, 1), (0.8, 0.1, 0.2)]
         cmap_name = 'my_list'
         Janitor.cm = LinearSegmentedColormap.from_list(cmap_name, Janitor.colors, N=3)
         defheatmap = Janitor.heatmap
@@ -83,7 +83,7 @@ class Tumor_janitor(Janitor):
     @classmethod
     def inherit_heatmap_graph(cls):
         fig = plt.figure(figsize=(10, 5))
-        Janitor.colors = [(1, 1, 1), (0.2, 0.8, 1), (0.5, 0.8, 0.2)]
+        Janitor.colors = [(1, 1, 1), (0.2, 0.8, 1), (0.8, 0.1, 0.2)]
         cmap_name = 'my_list'
         Janitor.cm = LinearSegmentedColormap.from_list(cmap_name, Janitor.colors, N=3)
         Janitor.ax1 = fig.add_subplot(1, 2, 1)

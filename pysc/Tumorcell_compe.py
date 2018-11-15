@@ -6,21 +6,24 @@ import fractions
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
+from decimal import *
 
 class Tumor_cell_compe(Cell):
 
     @classmethod
-    def receive_value(cls, AVERAGE, DISPERSION, AROUND, WEIGHT, MTRATE, DRUGTIMES, EFFECT):
+    def receive_value(cls, AVERAGE, DISPERSION, AROUND, WEIGHT1, WEIGHT2, MTRATE, DRUGTIMES, EFFECT):
         Cell.AVERAGE = AVERAGE
         Cell.DISPERSION = DISPERSION
         Cell.AROUND = AROUND
-        Cell.WEIGHT = WEIGHT
+        Cell.WEIGHT1 = WEIGHT1
+        Cell.WEIGHT2 = WEIGHT2
         Cell.MTRATE = MTRATE
-        Cell.K1 = ((Cell.AVERAGE * 4 * Cell.AROUND * (Cell.AROUND + 1)) / (1 + Cell.MTRATE)) + 1
-        Cell.K2 = ((Cell.AVERAGE * 4 * Cell.AROUND * (Cell.AROUND + 1) * (Cell.WEIGHT + 1)) / (1 + Cell.MTRATE)) + 1
+        Cell.K1 = Cell.AVERAGE * 8 * Cell.AROUND * (Cell.AROUND + 1)
+        Cell.K2 = Cell.AVERAGE * 8 * Cell.AROUND * (Cell.AROUND + 1) * (Cell.WEIGHT1 + 1)
         Cell.KM = (2 * Cell.AROUND + 1) ** 2 - 1
         Cell.EFFECT = EFFECT
         Cell.drtime_list = DRUGTIMES.split(",")
+        Cell.resicount = 0
 
     @classmethod
     def receive_list(cls, list):
@@ -60,6 +63,7 @@ class Tumor_cell_compe(Cell):
         if self.type == 1:
             self.resistflag = np.random.choice([1, 0], p=[Cell.MTRATE, 1 - Cell.MTRATE])
             if self.resistflag == 1:
+                Cell.resicount += 1
                 self.type = 2
                 self.resistflag = 0
 
@@ -90,6 +94,8 @@ class Tumor_cell_compe(Cell):
                     Cell.celllist[field[on + r - k, on - r]].prolife(field)
 
     def count_around(self, heatmap):
+        self.num = 0
+        self.enemynum = 0
         if self.dead == 0:
             arheatmap = heatmap[self.i - Cell.AROUND:self.i + Cell.AROUND + 1, self.j - Cell.AROUND:self.j + Cell.AROUND + 1].flatten()
             nozeroheat = arheatmap[arheatmap != 0]
@@ -98,7 +104,8 @@ class Tumor_cell_compe(Cell):
 
     def mortal1(self, field):
         if self.enemynum <= Cell.K1 and self.dead == 0:
-            nE = self.enemynum / Cell.K1
+            nE = (self.num + self.enemynum) / Cell.K2
+            nE = round(nE, 3)
             self.deathflag = np.random.choice([0, 1], p=[1 - nE, nE])
         if self.deathflag == 1:
             self.dead = 1
@@ -108,8 +115,13 @@ class Tumor_cell_compe(Cell):
             pass
 
     def mortal2(self, field):
-        if self.enemynum <= Cell.K2 and self.dead == 0:
-            nE = (self.num * Cell.WEIGHT + self.enemynum) / Cell.K2
+        if self.dead == 0:
+            if self.type == 1:
+                nE = (self.num + self.enemynum * Cell.WEIGHT2) / Cell.K1
+                nE = round(nE, 3)
+            if self.type == 2:
+                nE = (self.num + self.enemynum * Cell.WEIGHT1) / Cell.K1
+                nE = round(nE, 3)
             self.deathflag = np.random.choice([0, 1], p=[1 - nE, nE])
         if self.deathflag == 1:
             self.dead = 1
