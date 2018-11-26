@@ -9,7 +9,7 @@ class Plotter:
         Plotter.POISSON = POISSON
 
     @classmethod
-    def plot_mutation(cls, idlist, mutlist, POISSON):
+    def plot_mutation(cls, idlist, mutlist):
         finaldict = {}
         for i in range(0, len(idlist)):
             firstdict = {}
@@ -37,7 +37,7 @@ class Plotter:
             innerkeys.extend(innerkey)
         innerkeys_unique = list(set(innerkeys))
         for n in range(0, len(innerkeys_unique)):
-            poi = np.random.poisson(float(POISSON))
+            poi = np.random.poisson(float(Plotter.POISSON))
             innervalues.append(poi)
 
         innerdict = dict(zip(innerkeys_unique,innervalues))

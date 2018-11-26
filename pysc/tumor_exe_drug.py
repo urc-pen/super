@@ -15,6 +15,7 @@ from Plotter import Plotter
 import pickle
 import os
 import re
+
 homedir = os.path.abspath(os.path.dirname(__file__))
 homedir = re.sub("/pysc", "", homedir)
 
@@ -26,15 +27,17 @@ parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2"
 parser.add_argument("--SIZE", "-si", type=int, default=777)
 parser.add_argument("--AVERAGE", "-av", type=float, default=10)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=110000)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
-parser.add_argument("--AROUND", "-ar", default=15, type=int)
+parser.add_argument("--AROUND", "-ar", default=10, type=int)
 parser.add_argument("--WEIGHT1", "-we1", default=0.9, type=float)
 parser.add_argument("--WEIGHT2", "-we2", default=1.1, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
 parser.add_argument("--MTRATE", "-mt", default=0.00005, type=float)
-parser.add_argument("--DRUGTIMES", "-dr", default="80,85,100,105")
-parser.add_argument("--EFFECT", "-ef", default=0.5, type=float)
+parser.add_argument("--DRUGTIMES", "-dr", default="10,25")
+parser.add_argument("--EFFECT", "-ef", default=0.3, type=float)
+parser.add_argument("--PID", "-pi")
+parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
 if args.SIZE % 2 != 1:
@@ -49,20 +52,38 @@ print("描画のインターバル:{}".format(args.INTERVAL))
 print("競争モデル:{}".format(args.funcM))
 print("ローカルの計測範囲:{}".format(args.AROUND))
 print("薬剤耐性変異の入る確率:{}".format(args.MTRATE))
+print("薬剤投与スケジュール:{}".format(args.DRUGTIMES))
+print("薬剤の強さ:{}".format(args.EFFECT))
 if args.funcM == "mortal2":
     print("type1の競争係数（<1）:{}".format(args.WEIGHT1))
     print("type2の競争係数（>1）:{}".format(args.WEIGHT2))
 
+binary_fix = homedir + "/binary/" + args.PID
+listbinary = binary_fix + "_list.binaryfile"
+with open(listbinary, mode='rb') as f:
+    list = pickle.load(f)
+fieldbinary = binary_fix + "_field.binaryfile"
+with open(fieldbinary, mode='rb') as f:
+    field = pickle.load(f)
+heatmapbinary = binary_fix + "_heatmap.binaryfile"
+with open(heatmapbinary, mode='rb') as f:
+    heatmap = pickle.load(f)
+timedicbinary = binary_fix + "_timedic.binaryfile"
+with open(timedicbinary, mode='rb') as f:
+    timedic = pickle.load(f)
+mtlistbinary = binary_fix + "_mtlist.binaryfile"
+with open(mtlistbinary, mode='rb') as f:
+    mtlist = pickle.load(f)
+
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 Tumor_janitor.receive_value(args.func, args.SIZE, args.MAXNUM, args.INTERVAL)
 Tumor_janitor.create_value("drug")
-Janitor.set_field()
-Janitor.set_heatmap()
-Tumor_cell.set_first_cell(Janitor.field, Janitor.on)
+Tumor_janitor.receive_field_heatmap(field, heatmap)
+Tumor_cell.receive_list(list, timedic, mtlist)
 Tumor_janitor.append_cell_num()
 Tumor_janitor.first_heatmap_graph()
 
-while Janitor.n < Janitor.MAXNUM:
+while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 50000 and Janitor.t < 3000:
 
     for cell in Cell.celllist:
         if cell.dead == 0:
@@ -75,20 +96,23 @@ while Janitor.n < Janitor.MAXNUM:
 
     for cell in Cell.celllist:
         cell.count_around(Janitor.heatmap)
+        cell.drugged_infinity(Janitor.t)
 
+    Tumor_cell.drtime_adjust(Janitor.t)
     Janitor.refresh_heatmap()
 
     for cell in Cell.celllist:
         if args.funcM == "mortal1":
-            cell.mortal1(Janitor.field)
+            cell.mortal1_drug(Janitor.field)
         if args.funcM == "mortal2":
-            cell.mortal2(Janitor.field)
+            cell.mortal2_drug(Janitor.field)
         if cell.dead == 0:
             cell.waittime_gamma()
         cell.update_heatmap(Janitor.heatmap)
 
     Tumor_janitor.append_cell_num()
-    Tumor_janitor.plot_append_heatmap_graph(plot=False, append=False)
+    Tumor_janitor.plot_append_heatmap_graph(plot=False, append=True)
+    Tumor_janitor.count_type()
     Janitor.count_cell_num()
     Janitor.t += 1
 
@@ -96,24 +120,32 @@ while Janitor.n < Janitor.MAXNUM:
         break
 
 if args.funcM == "mortal1":
-    para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE)
+    para = pid + "_" + args.PID + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES)
 if args.funcM == "mortal2":
-    para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2)
-Tumor_janitor.save_heatmap_graph("pic", para)
+    para = pid + "_" + args.PID + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES)
 
-binary_fix = homedir + "/binary/" + pid
-listbinary = binary_fix + "_list.binaryfile"
-with open(listbinary, mode='wb') as f:
-    pickle.dump(Cell.celllist, f)
-fieldbinary = binary_fix + "_field.binaryfile"
-with open(fieldbinary, mode='wb') as f:
-    pickle.dump(Janitor.field, f)
-heatmapbinary = binary_fix + "_heatmap.binaryfile"
-with open(heatmapbinary, mode='wb') as f:
-    pickle.dump(Janitor.heatmap, f)
-timedicbinary = binary_fix + "_timedic.binaryfile"
-with open(timedicbinary, mode='wb') as f:
-    pickle.dump(Tumor_cell.timedic, f)
-mtlistbinary = binary_fix + "_mtlist.binaryfile"
-with open(mtlistbinary, mode='wb') as f:
-    pickle.dump(Tumor_cell.driver_list, f)
+Tumor_janitor.save_heatmap_graph("anime", para)
+Tumor_cell.list_adjust()
+Tumor_cell.make_idlist(Janitor.field)
+Plotter.receive_value(args.POISSON)
+Plotter.plot_mutation(Tumor_cell.idlist, Tumor_cell.driver_list)
+newicktxt = homedir + "/newick.txt"
+Plotter.write_newick(Tumor_cell.idlist, Cell.celllist, Tumor_cell.timedic, newicktxt)
+pidcsv = homedir + pid + ".csv"
+Plotter.df.to_csv(pidcsv)
+rfile = homedir + "/Rsc/illust.R"
+r2file = homedir + "/Rsc/tree.R"
+r = pr.R(use_pandas='True')
+r2 = pr.R()
+hpre = homedir + "/result/pdfstore/" + para
+tpre = homedir + "/result/txtstore/" + para
+treepre = homedir + "/result/treestore/" + para
+r.assign("pidcsv", pidcsv)
+r.assign("hpre", hpre)
+r.assign("tpre", tpre)
+r("source(file='{}')".format(str(rfile)))
+r2.assign("newicktxt", newicktxt)
+r2.assign("treepre", treepre)
+r2("source(file='{}')".format(str(r2file)))
+os.remove(pidcsv)
+os.remove(newicktxt)
