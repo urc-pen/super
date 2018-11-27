@@ -1,1 +1,1 @@
-mortal2
+mortal1 mortal2

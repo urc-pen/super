@@ -75,21 +75,21 @@ class Tumor_janitor(Janitor):
 
     @classmethod
     def plot_append_heatmap_graph(cls, plot=True, append=False):
-        plottime = Janitor.t % Janitor.INTERVAL
-        if plottime == 0:
-            if plot == True or append == True:
-                for n in range(1, 3):
-                    Janitor.heatmap[0, n - 1] = n
-                im = Janitor.ax1.plot(Janitor.tlist, Janitor.onelist, label=Janitor.label1, color=Janitor.colors[1])
-                im += Janitor.ax1.plot(Janitor.tlist, Janitor.twolist, label=Janitor.label2, color=Janitor.colors[2])
-                h = Janitor.ax2.imshow(Janitor.heatmap,interpolation="nearest", cmap=Janitor.cm)
-                im += [h]
-                if plot == True:
+        if plot == True or append == True:
+            for n in range(1, 3):
+                Janitor.heatmap[0, n - 1] = n
+            im = Janitor.ax1.plot(Janitor.tlist, Janitor.onelist, label=Janitor.label1, color=Janitor.colors[1])
+            im += Janitor.ax1.plot(Janitor.tlist, Janitor.twolist, label=Janitor.label2, color=Janitor.colors[2])
+            h = Janitor.ax2.imshow(Janitor.heatmap,interpolation="nearest", cmap=Janitor.cm)
+            im += [h]
+            if plot == True:
+                plottime = Janitor.t % Janitor.INTERVAL
+                if plottime == 0:
                     plt.pause(0.01)
-                if append == True:
-                    Janitor.ims.append(im)
-            else:
-                pass
+            if append == True:
+                Janitor.ims.append(im)
+        else:
+            pass
 
     @classmethod
     def count(cls):

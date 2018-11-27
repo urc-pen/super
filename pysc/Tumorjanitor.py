@@ -11,7 +11,7 @@ import matplotlib.animation as animation
 class Tumor_janitor(Janitor):
     @classmethod
     def receive_value(cls, func, SIZE, MAXNUM, INTERVAL):
-        super().receive_value(func, SIZE, MAXNUM)
+        super().receive_value(func, SIZE, MAXNUM, INTERVAL)
         Janitor.t = 3
         Janitor.onelist = [0]
         Janitor.twolist = [0]
