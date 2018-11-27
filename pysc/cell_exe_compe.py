@@ -29,7 +29,7 @@ parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
 parser.add_argument("--AROUND", "-ar", default=15, type=int)
 parser.add_argument("--WEIGHT", "-we", default=1.1, type=float)
-parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal1")
+parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="nomortal")
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
