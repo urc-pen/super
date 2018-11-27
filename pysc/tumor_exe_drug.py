@@ -33,7 +33,7 @@ parser.add_argument("--AROUND", "-ar", default=10, type=int)
 parser.add_argument("--WEIGHT1", "-we1", default=0.9, type=float)
 parser.add_argument("--WEIGHT2", "-we2", default=1.1, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
-parser.add_argument("--MTRATE", "-mt", default=0.0000001, type=float)
+parser.add_argument("--MTRATE", "-mt", default=0.000001, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="10,25")
 parser.add_argument("--EFFECT", "-ef", default=0.3, type=float)
 parser.add_argument("--PID", "-pi")
@@ -58,7 +58,7 @@ if args.funcM == "mortal2":
     print("type1の競争係数（<1）:{}".format(args.WEIGHT1))
     print("type2の競争係数（>1）:{}".format(args.WEIGHT2))
 
-binary_fix = homedir + "/binary/" + args.PID
+binary_fix = homedir + "/binary/" + str(args.PID)
 listbinary = binary_fix + "_list.binaryfile"
 with open(listbinary, mode='rb') as f:
     list = pickle.load(f)

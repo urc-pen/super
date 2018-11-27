@@ -2,4 +2,4 @@
 #$ -S /bin/bash
 #$ -cwd
 
-python ../pysc/tumor_exe_drug.py >&1 >&2 -av $1 -di $2
+python ../pysc/cell_exe_compe.py >&1 >&2 -av $1 -di $2
