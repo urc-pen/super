@@ -36,17 +36,6 @@ args = parser.parse_args()
 if args.SIZE % 2 != 1:
     raise InvaridNumber("奇数を入力してください")
 
-print("分裂方法:{}".format(args.func))
-print("フィールドの大きさ:{}".format(args.SIZE))
-print("最大許容細胞数:{}".format(args.MAXNUM))
-print("おおよその細胞周期:{}".format(args.AVERAGE))
-print("細胞周期のばらつき:{}".format(args.DISPERSION))
-print("描画のインターバル:{}".format(args.INTERVAL))
-print("競争モデル:{}".format(args.funcM))
-print("ローカルの計測範囲:{}".format(args.AROUND))
-if args.funcM == "mortal2":
-    print("競争係数:{}".format(args.WEIGHT))
-
 Cell_compe.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT)
 Janitor.receive_value(args.func, args.SIZE, args.MAXNUM, args.INTERVAL)
 Janitor.set_field()
