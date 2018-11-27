@@ -1,1 +1,1 @@
-mortal1 mortal2
+no_mortal
