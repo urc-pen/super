@@ -133,6 +133,14 @@ class Tumor_cell(Cell):
         for i in refid:
             Tumor_cell.idlist.append(Cell.celllist[i].mutation_id)
 
+    @classmethod
+    def make_idlist_includedead(cls, field):
+        Tumor_cell.idlist = []
+        id = list(range(len(Cell.celllist)))
+        refid = np.random.choice(id, 256, replace=False)
+        for i in refid:
+            Tumor_cell.idlist.append(Cell.celllist[i].mutation_id)
+
     def count_around(self, r, heatmap):
         for i in range(self.i - r, self.i + r + 1):
             for j in range(self.j - r, self.j + r + 1):

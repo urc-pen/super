@@ -153,3 +153,11 @@ class Cell_compe(Cell):
         refid = np.random.choice(field[field > -1], 256, replace=False)
         for i in refid:
             Cell_compe.idlist.append(Cell.celllist[i].mutation_id)
+
+    @classmethod
+    def make_idlist_includedead(cls, field):
+        Tumor_cell.idlist = []
+        id = list(range(len(Cell.celllist)))
+        refid = np.random.choice(id, 256, replace=False)
+        for i in refid:
+            Cell_compe.idlist.append(Cell.celllist[i].mutation_id)
