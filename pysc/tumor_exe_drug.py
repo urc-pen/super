@@ -33,7 +33,7 @@ parser.add_argument("--AROUND", "-ar", default=10, type=int)
 parser.add_argument("--WEIGHT1", "-we1", default=0.9, type=float)
 parser.add_argument("--WEIGHT2", "-we2", default=1.1, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
-parser.add_argument("--MTRATE", "-mt", default=0.00005, type=float)
+parser.add_argument("--MTRATE", "-mt", default=0.0000001, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="10,25")
 parser.add_argument("--EFFECT", "-ef", default=0.3, type=float)
 parser.add_argument("--PID", "-pi")
@@ -120,13 +120,13 @@ while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 50000 and Janitor.t 
         break
 
 if args.funcM == "mortal1":
-    para = pid + "_" + args.PID + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES)
+    para = pid + "_" + args.PID + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 if args.funcM == "mortal2":
-    para = pid + "_" + args.PID + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES)
+    para = pid + "_" + args.PID + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
 Tumor_janitor.save_heatmap_graph("anime", para)
 Tumor_cell.list_adjust()
-Tumor_cell.make_idlist(Janitor.field)
+Tumor_cell.make_idlist_includedead(Janitor.field)
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(Tumor_cell.idlist, Tumor_cell.driver_list)
 newicktxt = homedir + "/newick.txt"
