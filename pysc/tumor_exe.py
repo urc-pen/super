@@ -24,7 +24,7 @@ parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2"
 parser.add_argument("--SIZE", "-si", type=int, default=721)
 parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=10000)
 parser.add_argument("--ENV", "-en", default=4000, type=int)
 parser.add_argument("--MTRATE", "-mt", default=0.001, type=float)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
@@ -90,13 +90,13 @@ while Janitor.n < Janitor.MAXNUM:
 strmt = str(args.MTRATE)
 dstmt = strmt.replace('.', '_')
 if args.func2 == "cycle":
-    para = "c" + str(args.TUMORSPEED) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
+    para = pid + "c" + str(args.TUMORSPEED) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
 if args.func2 == "mortal":
-    para = "m" + str(args.ENV) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
+    para = pid + "m" + str(args.ENV) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + dstmt
 
 Tumor_janitor.save_heatmap_graph("anime", para)
 Tumor_cell.list_adjust()
-Tumor_cell.make_idlist(Janitor.field)
+Tumor_cell.make_idlist_includedead(Janitor.field)
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(Tumor_cell.idlist, Tumor_cell.driver_list)
 newicktxt = homedir + "/newick.txt"

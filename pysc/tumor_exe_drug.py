@@ -25,7 +25,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2")
 parser.add_argument("--SIZE", "-si", type=int, default=777)
-parser.add_argument("--AVERAGE", "-av", type=float, default=10)
+parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
 parser.add_argument("--MAXNUM", "-ma", type=int, default=110000)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
@@ -83,7 +83,7 @@ Tumor_cell.receive_list(list, timedic, mtlist)
 Tumor_janitor.append_cell_num()
 Tumor_janitor.first_heatmap_graph()
 
-while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 50000 and Janitor.t < 3000:
+while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 50000 and Janitor.t < 2000:
 
     for cell in Cell.celllist:
         if cell.dead == 0:
