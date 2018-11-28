@@ -81,7 +81,7 @@ if args.funcM == "mortal1":
     para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND)
 if args.funcM == "mortal2":
     para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "w" + str(args.WEIGHT)
-if args.funcM == "no_mortal":
+else:
     para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION)
 Janitor.save_heatmap_graph("anime", para)
 Cell_compe.list_adjust()
