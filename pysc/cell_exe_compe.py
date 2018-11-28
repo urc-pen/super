@@ -29,7 +29,7 @@ parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
 parser.add_argument("--AROUND", "-ar", default=15, type=int)
 parser.add_argument("--WEIGHT", "-we", default=1.1, type=float)
-parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="nomortal")
+parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="no_mortal")
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
@@ -81,6 +81,8 @@ if args.funcM == "mortal1":
     para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND)
 if args.funcM == "mortal2":
     para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "w" + str(args.WEIGHT)
+if args.funcM == "no_mortal":
+    para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION)
 Janitor.save_heatmap_graph("anime", para)
 Cell_compe.list_adjust()
 Cell_compe.make_idlist(Janitor.field)

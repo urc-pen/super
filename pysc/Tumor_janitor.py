@@ -16,7 +16,6 @@ class Tumor_janitor(Janitor):
         Janitor.tlist =[]
         Janitor.onelist = []
         Janitor.twolist = []
-        Janitor.INTERVAL = INTERVAL
         Janitor.ims = []
 
     @classmethod
