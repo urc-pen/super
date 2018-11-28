@@ -27,13 +27,13 @@ parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2"
 parser.add_argument("--SIZE", "-si", type=int, default=777)
 parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=110000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=140000)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
 parser.add_argument("--AROUND", "-ar", default=10, type=int)
 parser.add_argument("--WEIGHT1", "-we1", default=0.9, type=float)
 parser.add_argument("--WEIGHT2", "-we2", default=1.1, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
-parser.add_argument("--MTRATE", "-mt", default=0.00001, type=float)
+parser.add_argument("--MTRATE", "-mt", default=0.000001, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="10,13")
 parser.add_argument("--EFFECT", "-ef", default=0.2, type=float)
 parser.add_argument("--PID", "-pi")
@@ -83,7 +83,7 @@ Tumor_cell.receive_list(list, timedic, mtlist)
 Tumor_janitor.append_cell_num()
 Tumor_janitor.first_heatmap_graph()
 
-while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 50000 and Janitor.t < 2000:
+while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 60000 and Janitor.t < 2000:
 
     for cell in Cell.celllist:
         if cell.dead == 0:
