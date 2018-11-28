@@ -265,6 +265,7 @@ class Tumor_cell(Cell):
     @classmethod
     def make_idlist_includedead(cls, field):
         Tumor_cell.idlist = []
-        refid = np.random.randint(0, len(Cell.celllist), 256, replace=False)
+        id = list(range(len(Cell.celllist)))
+        refid = np.random.choice(id, 256, replace=False)
         for i in refid:
             Tumor_cell.idlist.append(Cell.celllist[i].mutation_id)
