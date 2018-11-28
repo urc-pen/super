@@ -92,17 +92,31 @@ class Cell_compe(Cell):
         if Cell.celllist[field[on, on]].proliferation == 1:
             getattr(Cell.celllist[field[on, on]], func)(field)
             Cell.celllist[field[on, on]].prolife(field)
-        spiral_list = []
-        for r in range(0, on):
-            spiral_list.append(field[on - r, on - r : on + r + 1].flatten())
-            spiral_list.append(field[on - r : on + r + 1, on + r].flatten())
-            spiral_list.append(field[on + r, on + r : on - r - 1 : -1].flatten())
-            spiral_list.append(field[on + r : on - r - 1 : -1, on - r].flatten())
-        spiral_list = spiral_list[spiral_list != -1]
-        for i in spiral_list:
-            if Cell.celllist[i].proliferation == 1:
-                getattr(Cell.celllist[field[on - r, on - r + k]], func)(field)
-                Cell.celllist[field[on - r, on - r + k]].prolife(field)
+        for r in range(1, on):
+            a = field[on - r, on - r : on + r + 1].flatten()
+            a = list(a[a != -1])
+            for i in a:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            b = field[on - r + 1 : on + r + 1, on + r].flatten()
+            b = list(b[b != -1])
+            for i in b:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            c = field[on + r, on + r - 1: on - r -1 : -1].flatten()
+            c = list(c[c != -1])
+            for i in c:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            d = field[on + r - 1 : on - r : -1, on - r].flatten()
+            d = list(d[d != -1])
+            for i in d:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
 
     @classmethod
     def radial_prolife(cls, field, on, func):

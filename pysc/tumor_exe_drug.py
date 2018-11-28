@@ -92,7 +92,7 @@ while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 60000 and Janitor.t 
         else:
             pass
 
-    Tumor_cell.radial_prolife(Janitor.field, Janitor.on, Janitor.func)
+    Tumor_cell.radial_prolife_up(Janitor.field, Janitor.on, Janitor.func)
 
     for cell in Cell.celllist:
         cell.count_around(Janitor.heatmap)

@@ -53,7 +53,7 @@ while Janitor.n < Janitor.MAXNUM:
         else:
             pass
 
-    Cell_compe.radial_prolife(Janitor.field, Janitor.on, Janitor.func)
+    Cell_compe.radial_prolife_up(Janitor.field, Janitor.on, Janitor.func)
 
     for cell in Cell.celllist:
         cell.count_around(Janitor.heatmap)
@@ -69,10 +69,10 @@ while Janitor.n < Janitor.MAXNUM:
             cell.waittime_gamma()
         cell.update_heatmap(Janitor.heatmap)
 
+    Janitor.t += 1
     Janitor.append_cell_num()
     Janitor.plot_append_heatmap_graph(plot=False, append=True)
     Janitor.count_cell_num()
-    Janitor.t += 1
 
     if Janitor.n >= Janitor.MAXNUM:
         break

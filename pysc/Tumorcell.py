@@ -81,28 +81,35 @@ class Tumor_cell(Cell):
         Cell.celllist.append(cell_new)
 
     @classmethod
-    def radial_prolife(cls, field, on, func):
-        if Cell.celllist[field[on, on]].proliferation == 1 and field[on, on] != -1:
+    def radial_prolife_up(cls, field, on, func):
+        if Cell.celllist[field[on, on]].proliferation == 1:
             getattr(Cell.celllist[field[on, on]], func)(field)
             Cell.celllist[field[on, on]].prolife(field)
-        for r in range(0, on):
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on - r, on - r + k]].proliferation == 1 and field[on - r, on - r + k] != -1:
-                    getattr(Cell.celllist[field[on - r, on - r + k]], func)(field)
-                    Cell.celllist[field[on - r, on - r + k]].prolife(field)
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on - r + k, on + r]].proliferation == 1 and field[on - r + k, on + r] != -1:
-                    getattr(Cell.celllist[field[on - r + k, on + r]], func)(field)
-                    Cell.celllist[field[on - r + k, on + r]].prolife(field)
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on + r, on + r - k]].proliferation == 1 and field[on + r, on + r - k] != -1:
-                    getattr(Cell.celllist[field[on + r, on + r - k]], func)(field)
-                    Cell.celllist[field[on + r, on + r - k]].prolife(field)
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on + r - k, on - r]].proliferation == 1 and field[on + r - k, on - r] != -1:
-                    getattr(Cell.celllist[field[on + r - k, on - r]], func)(field)
-                    Cell.celllist[field[on + r - k, on - r]].prolife(field)
-
+        for r in range(1, on):
+            a = field[on - r, on - r : on + r + 1].flatten()
+            a = list(a[a != -1])
+            for i in a:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            b = field[on - r + 1 : on + r + 1, on + r].flatten()
+            b = list(b[b != -1])
+            for i in b:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            c = field[on + r, on + r - 1: on - r -1 : -1].flatten()
+            c = list(c[c != -1])
+            for i in c:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            d = field[on + r - 1 : on - r : -1, on - r].flatten()
+            d = list(d[d != -1])
+            for i in d:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
     @classmethod
     def list_adjust(cls):
         Tumor_cell.driver_list = list(set(Tumor_cell.driver_list))

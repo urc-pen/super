@@ -68,7 +68,7 @@ while Janitor.n < Janitor.MAXNUM:
         else:
             pass
 
-    Tumor_cell.radial_prolife(Janitor.field, Janitor.on, Janitor.func)
+    Tumor_cell.radial_prolife_up(Janitor.field, Janitor.on, Janitor.func)
     Tumor_cell.countall(Janitor.heatmap)
     Janitor.refresh_heatmap()
 
@@ -79,10 +79,10 @@ while Janitor.n < Janitor.MAXNUM:
             cell.tumor_dead_or_alive(Janitor.field)
         cell.update_heatmap(Janitor.heatmap)
 
+    Janitor.t += 1
     Tumor_janitor.append_cell_num()
     Tumor_janitor.plot_append_heatmap_graph(plot=False, append=True)
     Janitor.count_cell_num()
-    Janitor.t += 1
 
     if Janitor.n >= Janitor.MAXNUM:
         break

@@ -158,6 +158,37 @@ class Cell:
             field[self.i, self.j] = self.id
 
     @classmethod
+    def radial_prolife_up(cls, field, on, func):
+        if Cell.celllist[field[on, on]].proliferation == 1:
+            getattr(Cell.celllist[field[on, on]], func)(field)
+            Cell.celllist[field[on, on]].prolife(field)
+        for r in range(1, on):
+            a = field[on - r, on - r : on + r + 1].flatten()
+            a = list(a[a != -1])
+            for i in a:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            b = field[on - r + 1 : on + r + 1, on + r].flatten()
+            b = list(b[b != -1])
+            for i in b:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            c = field[on + r, on + r - 1: on - r -1 : -1].flatten()
+            c = list(c[c != -1])
+            for i in c:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+            d = field[on + r - 1 : on - r : -1, on - r].flatten()
+            d = list(d[d != -1])
+            for i in d:
+                if Cell.celllist[i].proliferation == 1:
+                    getattr(Cell.celllist[i], func)(field)
+                    Cell.celllist[i].prolife(field)
+
+    @classmethod
     def radial_prolife(cls, field, on, func):
         if Cell.celllist[field[on, on]].proliferation == 1 and field[on, on] != -1:
             getattr(Cell.celllist[field[on, on]], func)(field)
