@@ -110,11 +110,12 @@ while Janitor.n < Janitor.MAXNUM and Janitor.cell_two_num < 50000 and Janitor.t 
             cell.waittime_gamma()
         cell.update_heatmap(Janitor.heatmap)
 
+    Janitor.t += 1
     Tumor_janitor.append_cell_num()
     Tumor_janitor.plot_append_heatmap_graph(plot=False, append=True)
     Tumor_janitor.count_type()
     Janitor.count_cell_num()
-    Janitor.t += 1
+
 
     if Janitor.n >= Janitor.MAXNUM:
         break
