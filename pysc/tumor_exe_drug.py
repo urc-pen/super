@@ -40,24 +40,6 @@ parser.add_argument("--PID", "-pi")
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
-if args.SIZE % 2 != 1:
-    raise InvaridNumber("奇数を入力してください")
-
-print("分裂方法:{}".format(args.func))
-print("フィールドの大きさ:{}".format(args.SIZE))
-print("最大許容細胞数:{}".format(args.MAXNUM))
-print("おおよその細胞周期:{}".format(args.AVERAGE))
-print("細胞周期のばらつき:{}".format(args.DISPERSION))
-print("描画のインターバル:{}".format(args.INTERVAL))
-print("競争モデル:{}".format(args.funcM))
-print("ローカルの計測範囲:{}".format(args.AROUND))
-print("薬剤耐性変異の入る確率:{}".format(args.MTRATE))
-print("薬剤投与スケジュール:{}".format(args.DRUGTIMES))
-print("薬剤の強さ:{}".format(args.EFFECT))
-if args.funcM == "mortal2":
-    print("type1の競争係数（<1）:{}".format(args.WEIGHT1))
-    print("type2の競争係数（>1）:{}".format(args.WEIGHT2))
-
 binary_fix = homedir + "/binary/" + str(args.PID)
 listbinary = binary_fix + "_list.binaryfile"
 with open(listbinary, mode='rb') as f:

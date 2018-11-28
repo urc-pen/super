@@ -37,22 +37,6 @@ parser.add_argument("--DRUGTIMES", "-dr", default="80,85,100,105")
 parser.add_argument("--EFFECT", "-ef", default=0.5, type=float)
 args = parser.parse_args()
 
-if args.SIZE % 2 != 1:
-    raise InvaridNumber("奇数を入力してください")
-
-print("分裂方法:{}".format(args.func))
-print("フィールドの大きさ:{}".format(args.SIZE))
-print("最大許容細胞数:{}".format(args.MAXNUM))
-print("おおよその細胞周期:{}".format(args.AVERAGE))
-print("細胞周期のばらつき:{}".format(args.DISPERSION))
-print("描画のインターバル:{}".format(args.INTERVAL))
-print("競争モデル:{}".format(args.funcM))
-print("ローカルの計測範囲:{}".format(args.AROUND))
-print("薬剤耐性変異の入る確率:{}".format(args.MTRATE))
-if args.funcM == "mortal2":
-    print("type1の競争係数（<1）:{}".format(args.WEIGHT1))
-    print("type2の競争係数（>1）:{}".format(args.WEIGHT2))
-
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 Tumor_janitor.receive_value(args.func, args.SIZE, args.MAXNUM, args.INTERVAL)
 Tumor_janitor.create_value("drug")

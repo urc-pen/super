@@ -34,22 +34,6 @@ parser.add_argument("--func2", "-fu2", choices=["cycle", "mortal"], default="mor
 parser.add_argument("--AROUND", "-ar", default=10, type=int)
 args = parser.parse_args()
 
-if args.SIZE % 2 != 1:
-    raise InvaridNumber("奇数を入力してください")
-
-print("分裂方法:{}".format(args.func))
-print("フィールドの大きさ:{}".format(args.SIZE))
-print("最大許容細胞数:{}".format(args.MAXNUM))
-print("おおよその細胞周期:{}".format(args.AVERAGE))
-print("細胞周期のばらつき:{}".format(args.DISPERSION))
-print("ドライバー変異の起きる確率:{}".format(args.MTRATE))
-print("描画のインターバル:{}".format(args.INTERVAL))
-print("ポアソン分布の期待値:{}".format(args.POISSON))
-if args.func2 == "cycle":
-    print("ガン細胞の細胞周期の短くなる割合:{}".format(args.TUMORSPEED))
-if args.func2 == "mortal":
-    print("環境収容力:{}".format(args.ENV))
-
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.ENV, args.MTRATE, args.TUMORSPEED)
 Tumor_janitor.receive_value(args.func, args.SIZE, args.MAXNUM, args.INTERVAL)
 Tumor_janitor.create_value("driver")
