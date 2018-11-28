@@ -70,7 +70,7 @@ while Janitor.n < Janitor.MAXNUM:
         cell.update_heatmap(Janitor.heatmap)
 
     Janitor.append_cell_num()
-    Janitor.plot_append_heatmap_graph(plot=True, append=True)
+    Janitor.plot_append_heatmap_graph(plot=False, append=True)
     Janitor.count_cell_num()
     Janitor.t += 1
 
