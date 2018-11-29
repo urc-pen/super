@@ -27,7 +27,7 @@ parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2"
 parser.add_argument("--SIZE", "-si", type=int, default=777)
 parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=115000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=140000)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
 parser.add_argument("--AROUND", "-ar", default=10, type=int)
 parser.add_argument("--WEIGHT1", "-we1", default=0.9, type=float)

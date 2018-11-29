@@ -118,29 +118,6 @@ class Cell_compe(Cell):
                     getattr(Cell.celllist[i], func)(field)
                     Cell.celllist[i].prolife(field)
 
-    @classmethod
-    def radial_prolife(cls, field, on, func):
-        if Cell.celllist[field[on, on]].proliferation == 1 and field[on, on] != -1:
-            getattr(Cell.celllist[field[on, on]], func)(field)
-            Cell.celllist[field[on, on]].prolife(field)
-        for r in range(0, on):
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on - r, on - r + k]].proliferation == 1 and field[on - r, on - r + k] != -1:
-                    getattr(Cell.celllist[field[on - r, on - r + k]], func)(field)
-                    Cell.celllist[field[on - r, on - r + k]].prolife(field)
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on - r + k, on + r]].proliferation == 1 and field[on - r + k, on + r] != -1:
-                    getattr(Cell.celllist[field[on - r + k, on + r]], func)(field)
-                    Cell.celllist[field[on - r + k, on + r]].prolife(field)
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on + r, on + r - k]].proliferation == 1 and field[on + r, on + r - k] != -1:
-                    getattr(Cell.celllist[field[on + r, on + r - k]], func)(field)
-                    Cell.celllist[field[on + r, on + r - k]].prolife(field)
-            for k in range(0, 2 * r):
-                if Cell.celllist[field[on + r - k, on - r]].proliferation == 1 and field[on + r - k, on - r] != -1:
-                    getattr(Cell.celllist[field[on + r - k, on - r]], func)(field)
-                    Cell.celllist[field[on + r - k, on - r]].prolife(field)
-
     def count_around(self, heatmap):
         self.num = 0
         self.enemynum = 0
