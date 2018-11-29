@@ -54,7 +54,7 @@ class Tumor_janitor(Janitor):
         Janitor.ax1 = Janitor.fig.add_subplot(1, 2, 1)
         Janitor.ax2 = Janitor.fig.add_subplot(1, 2, 2)
         Janitor.ax1.set_yscale('log')
-        Janitor.ax1.set_ylim([1,130000])
+        Janitor.ax1.set_ylim([1,1000000])
         im = Janitor.ax1.plot(Janitor.tlist, Janitor.onelist, label=Janitor.label1, color=Janitor.colors[1])
         im += Janitor.ax1.plot(Janitor.tlist, Janitor.twolist, label=Janitor.label2, color=Janitor.colors[2])
         defheatmap = Janitor.heatmap
