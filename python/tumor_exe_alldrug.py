@@ -81,7 +81,7 @@ while janitor.n < janitor.MAXNUM:
     if janitor.n >= janitor.MAXNUM:
         break
 
-while janitor.n < janitor.MAXNUM + 10000:
+while janitor.n < janitor.MAXNUM + 10000 and janitor.n == 0:
 
     for cell in janitor.celllist:
         if cell.dead == 0:
