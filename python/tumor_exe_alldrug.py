@@ -34,6 +34,7 @@ parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="
 parser.add_argument("--MTRATE", "-mt", default=0.00005, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="10,20")
 parser.add_argument("--EFFECT", "-ef", default=0.5, type=float)
+parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
 janitor = Janitor()
@@ -116,9 +117,9 @@ while janitor.n < janitor.MAXNUM + 10000:
         break
 
 if args.funcM == "mortal1":
-    para = pid + "_" + args.PID + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
+    para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 if args.funcM == "mortal2":
-    para = pid + "_" + args.PID + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
+    para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
 visualizer.save_heatmap_graph("anime", para, janitor.heatmap)
 janitor.list_adjust()
