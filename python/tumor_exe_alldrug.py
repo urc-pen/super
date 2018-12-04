@@ -81,7 +81,7 @@ while janitor.n < janitor.MAXNUM:
     if janitor.n >= janitor.MAXNUM:
         break
 
-while janitor.n < janitor.MAXNUM + 10000 and janitor.n != 0:
+while janitor.n < janitor.MAXNUM + 10000 and janitor.n > 0:
 
     for cell in janitor.celllist:
         if cell.dead == 0:
@@ -143,10 +143,6 @@ r2.assign("treepre", treepre)
 r2("source(file='{}')".format(str(r2file)))
 os.remove(pidcsv)
 os.remove(newicktxt)
-binary_fix = homedir + "/binary/" + pid
-janitorbinary = binary_fix + "_janitor.binaryfile"
-with open(janitorbinary, mode='wb') as f:
-    pickle.dump(janitor, f)
 
 binary_fix = homedir + "/binary/" + pid
 janitorbinary = binary_fix + "_janitor.binaryfile"
