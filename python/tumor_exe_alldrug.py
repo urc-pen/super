@@ -113,9 +113,6 @@ while janitor.n < janitor.MAXNUM + 10000 and janitor.n != 0:
     janitor.count_cell_num()
     janitor.t += 1
 
-    if janitor.n >= janitor.MAXNUM:
-        break
-
 if args.funcM == "mortal1":
     para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 if args.funcM == "mortal2":
