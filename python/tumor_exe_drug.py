@@ -48,7 +48,7 @@ with open(visualizerbinary, mode='rb') as f:
 
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 janitor.receive_value(args.func, args.SIZE, args.MAXNUM)
-
+Tumor_cell.prepare_drug(janitor.t)
 while janitor.n < janitor.MAXNUM:
 
     for cell in janitor.celllist:
