@@ -119,6 +119,11 @@ if args.funcM == "mortal2":
     para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
 visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist, args.FNAME)
+binary_fix = homedir + "/binary/" + pid
+janitorbinary = binary_fix + "_janitor.binaryfile"
+with open(janitorbinary, mode='wb') as f:
+    pickle.dump(janitor, f)
+
 janitor.list_adjust()
 janitor.make_idlist_includedead()
 Plotter.receive_value(args.POISSON)
