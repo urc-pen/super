@@ -3,6 +3,7 @@ import random
 import math
 import fractions
 import matplotlib as mpl
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import pyper as pr

@@ -9,6 +9,12 @@ import matplotlib.animation as animation
 
 class Janitor:
     def __init__(self, mode):
+        self.tlist = []
+        self.t = 0
+        self.n = 0
+        self.celllist = []
+        self.timedic = {}
+        self.driver_list = []
         if mode == "two":
             self.mode = "two"
             self.cell_one_num = 0
@@ -21,12 +27,6 @@ class Janitor:
             self.fourlist = []
             self.fivelist = []
             self.sixlist = []
-        self.tlist = []
-        self.t = 0
-        self.n = 0
-        self.celllist = []
-        self.timedic = {}
-        self.driver_list = []
 
     def receive_value(self, func, SIZE, MAXNUM):
         self.func = func

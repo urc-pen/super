@@ -189,8 +189,6 @@ class Tumor_cell(Cell):
                 if self.type == 1:
                     dens = 1 - (self.num + self.enemynum) / Cell.KM
                     self.drdeath = dens * Cell.EFFECT
-                else:
-                    self.drdeath = 0
             if t == int(Cell.drtime_list[1]):
                 if self.type == 1:
                     self.drdeath = 0
@@ -204,8 +202,6 @@ class Tumor_cell(Cell):
             if self.type == 1:
                 dens = 1 - (self.num + self.enemynum) / Cell.KM
                 self.drdeath = dens * Cell.EFFECT
-            else:
-                self.drdeath = 0
         if t == Cell.DR_STRTIME + Cell.DR_DURATION:
             if self.type == 1:
                 self.drdeath = 0
@@ -213,7 +209,7 @@ class Tumor_cell(Cell):
     @classmethod
     def drtime_adjust(cls, t):
         if t == Cell.DR_STRTIME + Cell.DR_DURATION:
-            Cell.DR_STRTIME += Cell.DR_INTERVAL
+            Cell.DR_STRTIME += Cell.DR_INTERVAL + Cell.DR_DURATION
 
     @classmethod
     def drtime_list_adjust(cls, t):

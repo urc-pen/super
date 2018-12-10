@@ -62,14 +62,14 @@ class Visualizer_two(Visualizer):
             else:
                 pass
 
-    def save_heatmap_graph(self, mode, para, heatmap, tlist, onelist, twolist):
+    def save_heatmap_graph(self, mode, para, heatmap, tlist, onelist, twolist, fname):
         if mode == "pic":
             self.ax1.plot(tlist, onelist, label=self.label1, color=self.colors[1])
             self.ax1.plot(tlist, twolist, label=self.label2, color=self.colors[2])
             self.ax2.imshow(heatmap,interpolation="nearest", cmap=self.cm)
-            pidpng = "../result/pngstore/" + para + ".png"
+            pidpng = fname + "/pngstore/" + para + ".png"
             plt.savefig(pidpng)
         if mode == "anime":
             ani = animation.ArtistAnimation(self.fig, self.ims, interval=50, blit=True, repeat_delay=1000)
-            pidgif = "../result/gifstore/" + para + ".gif"
+            pidgif = fname + "/gifstore/" + para + ".gif"
             ani.save(pidgif, writer="imagemagick")
