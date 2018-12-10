@@ -19,7 +19,7 @@ fname+=$ef
 fname+=$we1
 fname+=$we2
 fname=${fname//./_}
-mkdir $fname
+touch $fname
 qsub -l -e $fname -o $fname s_vmem=12G,mem_req=12G super_exe_alldrug.sh $mt $dr $ef $we1 $we2 $fname
 done
 done
