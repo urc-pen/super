@@ -120,10 +120,6 @@ if args.funcM == "mortal2":
 visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
 janitor.list_adjust()
 janitor.make_idlist_includedead()
-binary_fix = homedir + "/binary/" + pid
-janitorbinary = binary_fix + "_janitor.binaryfile"
-with open(janitorbinary, mode='wb') as f:
-    pickle.dump(janitor, f)
 
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(janitor.idlist, janitor.driver_list)
