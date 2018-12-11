@@ -76,20 +76,17 @@ while janitor.n < janitor.MAXNUM:
             cell.waittime_gamma()
         cell.update_heatmap(janitor.heatmap)
 
-    visualizer.append_cell_num(janitor.heatmap, janitor.t)
-    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, plot=False, append=True)
+    janitor.append_cell_num()
+    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, janitor.tlist, janitor.onelist, janitor.twolist, plot=False, append=True)
     janitor.count_cell_num()
     janitor.t += 1
-
-    if janitor.n >= janitor.MAXNUM:
-        break
 
 if args.funcM == "mortal1":
     para = pid + "_" + args.PID + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 if args.funcM == "mortal2":
     para = pid + "_" + args.PID + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
-visualizer.save_heatmap_graph("anime", para, janitor.heatmap)
+visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
 janitor.list_adjust()
 janitor.make_idlist_includedead()
 Plotter.receive_value(args.POISSON)
