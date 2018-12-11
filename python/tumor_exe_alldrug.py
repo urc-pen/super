@@ -25,14 +25,14 @@ parser.add_argument("--func", "-fu", choices=["dire1", "dire2"], default="dire2"
 parser.add_argument("--SIZE", "-si", type=int, default=777)
 parser.add_argument("--AVERAGE", "-av", type=float, default=10)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
-parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
+parser.add_argument("--MAXNUM", "-ma", type=int, default=10000)
 parser.add_argument("--INTERVAL", "-in", default=100, type=int)
 parser.add_argument("--AROUND", "-ar", default=15, type=int)
 parser.add_argument("--WEIGHT1", "-we1", default=1.1, type=float)
 parser.add_argument("--WEIGHT2", "-we2", default=0.9, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
-parser.add_argument("--MTRATE", "-mt", default=0.0000005, type=float)
-parser.add_argument("--DRUGTIMES", "-dr", default="10,14")
+parser.add_argument("--MTRATE", "-mt", default=0.01, type=float)
+parser.add_argument("--DRUGTIMES", "-dr", default="10,1")
 parser.add_argument("--EFFECT", "-ef", default=0.28, type=float)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
@@ -120,6 +120,11 @@ if args.funcM == "mortal2":
 visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
 janitor.list_adjust()
 janitor.make_idlist_includedead()
+binary_fix = homedir + "/binary/" + pid
+janitorbinary = binary_fix + "_janitor.binaryfile"
+with open(janitorbinary, mode='wb') as f:
+    pickle.dump(janitor, f)
+
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(janitor.idlist, janitor.driver_list)
 newicktxt = homedir + "/newick" + pid + ".txt"
@@ -142,8 +147,3 @@ r2.assign("treepre", treepre)
 r2("source(file='{}')".format(str(r2file)))
 os.remove(pidcsv)
 os.remove(newicktxt)
-
-binary_fix = homedir + "/binary/" + pid
-janitorbinary = binary_fix + "_janitor.binaryfile"
-with open(janitorbinary, mode='wb') as f:
-    pickle.dump(janitor, f)
