@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import pyper as pr
 from Tumorcell_compe import Tumor_cell
-from Janitor import Janitor
-from Visualizer_two import Visualizer_two
+from Janitor_ver2 import Janitor
+from Visualizer_two_ver2 import Visualizer_two
 from Plotter import Plotter
 import pickle
 import os
@@ -28,15 +28,15 @@ parser.add_argument("--DISPERSION", "-di", type=float, default=2)
 parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
 parser.add_argument("--AROUND", "-ar", default=15, type=int)
-parser.add_argument("--WEIGHT1", "-we1", default=0.9, type=float)
-parser.add_argument("--WEIGHT2", "-we2", default=1.2, type=float)
+parser.add_argument("--WEIGHT1", "-we1", default=1.02, type=float)
+parser.add_argument("--WEIGHT2", "-we2", default=0.98, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
-parser.add_argument("--MTRATE", "-mt", default=0.00005, type=float)
+parser.add_argument("--MTRATE", "-mt", default=0.0000005, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="10,20")
 parser.add_argument("--EFFECT", "-ef", default=0.5, type=float)
 args = parser.parse_args()
 
-janitor = Janitor()
+janitor = Janitor(mode="two")
 visualizer = Visualizer_two(mode="drug")
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 janitor.receive_value(args.func, args.SIZE, args.MAXNUM)
@@ -44,8 +44,8 @@ visualizer.receive_value(args.INTERVAL)
 janitor.set_field()
 janitor.set_heatmap()
 Tumor_cell.set_first_cell(janitor.field, janitor.on, janitor.celllist)
-visualizer.append_cell_num(janitor.heatmap, janitor.t)
-visualizer.first_heatmap_graph(janitor.heatmap)
+janitor.append_cell_num()
+visualizer.first_heatmap_graph(janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
 
 while janitor.n < janitor.MAXNUM:
 
@@ -72,19 +72,17 @@ while janitor.n < janitor.MAXNUM:
             cell.waittime_gamma()
         cell.update_heatmap(janitor.heatmap)
 
-    visualizer.append_cell_num(janitor.heatmap, janitor.t)
-    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, plot=False, append=True)
+    janitor.append_cell_num()
+    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, janitor.tlist, janitor.onelist, janitor.twolist, plot=False, append=True)
     janitor.count_cell_num()
     janitor.t += 1
-
-    if janitor.n >= janitor.MAXNUM:
-        break
 
 if args.funcM == "mortal1":
     para = pid + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE)
 if args.funcM == "mortal2":
     para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2)
-visualizer.save_heatmap_graph("anime", para, janitor.heatmap)
+
+visualizer.save_heatmap_graph("pic", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
 
 binary_fix = homedir + "/binary/" + pid
 janitorbinary = binary_fix + "_janitor.binaryfile"

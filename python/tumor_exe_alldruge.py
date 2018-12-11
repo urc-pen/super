@@ -32,9 +32,10 @@ parser.add_argument("--WEIGHT1", "-we1", default=1.1, type=float)
 parser.add_argument("--WEIGHT2", "-we2", default=0.9, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
 parser.add_argument("--MTRATE", "-mt", default=0.0000005, type=float)
-parser.add_argument("--DRUGTIMES", "-dr", default="10,14")
+parser.add_argument("--DRUGTIMES", "-dr", default="10,5")
 parser.add_argument("--EFFECT", "-ef", default=0.28, type=float)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
+parser.add_argument("--FNAME", "-fn")
 args = parser.parse_args()
 
 janitor = Janitor(mode="two")
@@ -117,7 +118,12 @@ if args.funcM == "mortal1":
 if args.funcM == "mortal2":
     para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
-visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
+visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist, args.FNAME)
+binary_fix = homedir + "/binary/" + pid
+janitorbinary = binary_fix + "_janitor.binaryfile"
+with open(janitorbinary, mode='wb') as f:
+    pickle.dump(janitor, f)
+
 janitor.list_adjust()
 janitor.make_idlist_includedead()
 Plotter.receive_value(args.POISSON)
@@ -130,9 +136,9 @@ rfile = homedir + "/Rsc/illust.R"
 r2file = homedir + "/Rsc/tree.R"
 r = pr.R(use_pandas='True')
 r2 = pr.R()
-hpre = homedir + "/result/pdfstore/" + para
-tpre = homedir + "/result/txtstore/" + para
-treepre = homedir + "/result/treestore/" + para
+hpre = args.FNAME + "/pdfstore/" + para
+tpre = args.FNAME + "/txtstore/" + para
+treepre = args.FNAME + "/treestore/" + para
 r.assign("pidcsv", pidcsv)
 r.assign("hpre", hpre)
 r.assign("tpre", tpre)
@@ -142,8 +148,3 @@ r2.assign("treepre", treepre)
 r2("source(file='{}')".format(str(r2file)))
 os.remove(pidcsv)
 os.remove(newicktxt)
-
-binary_fix = homedir + "/binary/" + pid
-janitorbinary = binary_fix + "_janitor.binaryfile"
-with open(janitorbinary, mode='wb') as f:
-    pickle.dump(janitor, f)
