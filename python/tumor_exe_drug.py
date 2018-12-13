@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import pyper as pr
 from Tumorcell_compe import Tumor_cell
-from Janitor import Janitor
-from Visualizer_two import Visualizer_two
+from Janitor_ver2 import Janitor
+from Visualizer_two_ver2 import Visualizer_two
 from Plotter import Plotter
 import pickle
 import os
