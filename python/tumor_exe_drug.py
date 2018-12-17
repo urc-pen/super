@@ -7,6 +7,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import pyper as pr
+from Cell import Cell
 from Tumorcell_compe import Tumor_cell
 from Janitor_ver2 import Janitor
 from Visualizer_two_ver2 import Visualizer_two
@@ -49,7 +50,8 @@ with open(visualizerbinary, mode='rb') as f:
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 janitor.receive_value(args.func, args.SIZE, args.MAXNUM)
 Tumor_cell.prepare_drug(janitor.t)
-while janitor.n < janitor.MAXNUM:
+
+while janitor.n < janitor.MAXNUM and janitor.n > 0:
 
     for cell in janitor.celllist:
         if cell.dead == 0:
@@ -60,9 +62,15 @@ while janitor.n < janitor.MAXNUM:
 
     Tumor_cell.radial_prolife_up(janitor.field, janitor.on, janitor.func, janitor.celllist, janitor.timedic, janitor.driver_list)
 
-    for cell in janitor.celllist:
-        cell.count_around(janitor.heatmap)
-        cell.drugged_infinity(janitor.t)
+    if Cell.DR_INTERVAL != 0:
+        for cell in janitor.celllist:
+            cell.count_around(janitor.heatmap)
+            cell.drugged_infinity(janitor.t)
+
+    if Cell.DR_INTERVAL == 0:
+        for cell in janitor.celllist:
+            cell.count_around(janitor.heatmap)
+            cell.drugged_infinity_continued()
 
     Tumor_cell.drtime_adjust(janitor.t)
     janitor.refresh_heatmap()

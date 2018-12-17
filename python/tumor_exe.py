@@ -67,7 +67,7 @@ while janitor.n < janitor.MAXNUM:
         cell.update_heatmap(janitor.heatmap)
 
     visualizer.append_cell_num(janitor.heatmap, janitor.t)
-    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, plot=False, append=True)
+    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, plot=False, append=False)
     janitor.count_cell_num()
     janitor.t += 1
 
@@ -79,9 +79,9 @@ if args.func2 == "cycle":
 if args.func2 == "mortal":
     para = "m" + str(args.ENV) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + str(args.MTRATE)
 
-visualizer.save_heatmap_graph("anime", para, janitor.heatmap)
+visualizer.save_heatmap_graph("pic", para, janitor.heatmap)
 janitor.list_adjust()
-janitor.make_idlist_includedead()
+janitor.make_idlist()
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(janitor.idlist, janitor.driver_list)
 newicktxt = homedir + "/newick" + pid + ".txt"

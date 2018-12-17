@@ -206,6 +206,11 @@ class Tumor_cell(Cell):
             if self.type == 1:
                 self.drdeath = 0
 
+    def drugged_infinity_continued(self):
+        if self.type == 1:
+            dens = 1 - (self.num + self.enemynum) / Cell.KM
+            self.drdeath = dens * Cell.EFFECT
+
     @classmethod
     def drtime_adjust(cls, t):
         if t == Cell.DR_STRTIME + Cell.DR_DURATION:
