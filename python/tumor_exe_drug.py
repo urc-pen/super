@@ -51,6 +51,8 @@ Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT
 janitor.receive_value(args.func, args.SIZE, args.MAXNUM)
 Tumor_cell.prepare_drug(janitor.t)
 
+TIME = janitor.t
+
 while janitor.n < janitor.MAXNUM and janitor.n > 0:
 
     for cell in janitor.celllist:
@@ -85,45 +87,20 @@ while janitor.n < janitor.MAXNUM and janitor.n > 0:
         cell.update_heatmap(janitor.heatmap)
 
     janitor.append_cell_num()
-    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, janitor.tlist, janitor.onelist, janitor.twolist, plot=False, append=True)
+    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, janitor.tlist, janitor.onelist, janitor.twolist, plot=False, append=False)
     janitor.count_cell_num()
     janitor.t += 1
+
+ENDTIME = janitor.t
 
 if args.funcM == "mortal1":
     para = pid + "_" + args.PID + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 if args.funcM == "mortal2":
     para = pid + "_" + args.PID + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
-visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
-janitor.list_adjust()
-janitor.make_idlist_includedead()
-Plotter.receive_value(args.POISSON)
-Plotter.plot_mutation(janitor.idlist, janitor.driver_list)
-newicktxt = homedir + "/newick" + pid + ".txt"
-Plotter.write_newick(janitor.idlist, janitor.celllist, janitor.timedic, newicktxt)
-pidcsv = homedir + "/" + pid + ".csv"
-Plotter.df.to_csv(pidcsv)
-rfile = homedir + "/Rsc/illust.R"
-r2file = homedir + "/Rsc/tree.R"
-r = pr.R(use_pandas='True')
-r2 = pr.R()
-hpre = homedir + "/result/pdfstore/" + para
-tpre = homedir + "/result/txtstore/" + para
-treepre = homedir + "/result/treestore/" + para
-r.assign("pidcsv", pidcsv)
-r.assign("hpre", hpre)
-r.assign("tpre", tpre)
-r("source(file='{}')".format(str(rfile)))
-r2.assign("newicktxt", newicktxt)
-r2.assign("treepre", treepre)
-r2("source(file='{}')".format(str(r2file)))
-os.remove(pidcsv)
-os.remove(newicktxt)
+timepre = homedir + "/result/txtstore/" + para + ".txt"
+RESULT = ENDTIME - TIME
+TXTTIME = str(TIME) + "_" + str(ENDTIME) + "_" + str(RESULT)
 
-binary_fix = homedir + "/binary/" + pid
-janitorbinary = binary_fix + "_janitor.binaryfile"
-with open(janitorbinary, mode='wb') as f:
-    pickle.dump(janitor, f)
-visualizerbinary = binary_fix + "_visualizer.binaryfile"
-with open(visualizerbinary, mode='wb') as f:
-    pickle.dump(visualizer, f)
+with open(timepre, mode='w') as f:
+    f.write(TXTTIME)
