@@ -100,7 +100,7 @@ if args.funcM == "mortal2":
 
 timepre = homedir + "/result/txtstore/" + para + ".txt"
 RESULT = ENDTIME - TIME
-TXTTIME = str(TIME) + "_" + str(ENDTIME) + "_" + str(RESULT)
+TXTTIME = str(janitor.n) + "_" + str(TIME) + "_" + str(ENDTIME) + "_" + str(RESULT)
 
 with open(timepre, mode='w') as f:
     f.write(TXTTIME)
