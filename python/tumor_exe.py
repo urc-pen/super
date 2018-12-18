@@ -26,8 +26,8 @@ parser.add_argument("--SIZE", "-si", type=int, default=777)
 parser.add_argument("--AVERAGE", "-av", type=float, default=15)
 parser.add_argument("--DISPERSION", "-di", type=float, default=2)
 parser.add_argument("--MAXNUM", "-ma", type=int, default=100000)
-parser.add_argument("--ENV", "-en", default=4000, type=int)
-parser.add_argument("--MTRATE", "-mt", default=0.001, type=float)
+parser.add_argument("--ENV", "-en", default=100000, type=int)
+parser.add_argument("--MTRATE", "-mt", default=0.00001, type=float)
 parser.add_argument("--INTERVAL", "-in", default=1, type=int)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 parser.add_argument("--TUMORSPEED", "-tu", default=3, type=float)
@@ -67,7 +67,7 @@ while janitor.n < janitor.MAXNUM:
         cell.update_heatmap(janitor.heatmap)
 
     visualizer.append_cell_num(janitor.heatmap, janitor.t)
-    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, plot=False, append=False)
+    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, plot=False, append=True)
     janitor.count_cell_num()
     janitor.t += 1
 
@@ -79,7 +79,7 @@ if args.func2 == "cycle":
 if args.func2 == "mortal":
     para = "m" + str(args.ENV) + "a_d" + str(args.AVERAGE) + "p" + str(args.POISSON) + "m" + str(args.MTRATE)
 
-visualizer.save_heatmap_graph("pic", para, janitor.heatmap)
+visualizer.save_heatmap_graph("anime", para, janitor.heatmap)
 janitor.list_adjust()
 janitor.make_idlist()
 Plotter.receive_value(args.POISSON)
@@ -103,11 +103,6 @@ r2.assign("newicktxt", newicktxt)
 r2.assign("treepre", treepre)
 r2("source(file='{}')".format(str(r2file)))
 os.remove(pidcsv)
-os.remove(newicktxt)
-binary_fix = homedir + "/binary/" + pid
-janitorbinary = binary_fix + "_janitor.binaryfile"
-with open(janitorbinary, mode='wb') as f:
-    pickle.dump(janitor, f)
 
 binary_fix = homedir + "/binary/" + pid
 janitorbinary = binary_fix + "_janitor.binaryfile"
