@@ -99,6 +99,11 @@ janitorbinary = binary_fix + "_janitor.binaryfile"
 with open(janitorbinary, mode='wb') as f:
     pickle.dump(janitor, f)
 
+x = "debugdekita"
+timepre = homedir + "/binary/" + pid + ".txt"
+with open(timepre, mode='w') as f:
+    f.write(x)
+
 janitor.list_adjust()
 janitor.make_idlist()
 Plotter.receive_value(args.POISSON)
