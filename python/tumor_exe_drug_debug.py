@@ -39,7 +39,7 @@ parser.add_argument("--PID", "-pi", default=15031)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
-binary_fix = homedir + "/binary/" + args.PID
+binary_fix = homedir + "/binary/" + str(args.PID)
 janitorbinary = binary_fix + "_janitor.binaryfile"
 with open(janitorbinary, mode='rb') as f:
     janitor = pickle.load(f)
@@ -90,9 +90,9 @@ while janitor.n < janitor.MAXNUM and janitor.n > 0:
     janitor.t += 1
 
 if args.funcM == "mortal1":
-    para = pid + "_" + args.PID + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
+    para = pid + "_" + str(args.PID) + "m1_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 if args.funcM == "mortal2":
-    para = pid + "_" + args.PID + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
+    para = pid + "_" + str(args.PID) + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
 binary_fix = homedir + "/binary/" + pid
 janitorbinary = binary_fix + "_janitor.binaryfile"
