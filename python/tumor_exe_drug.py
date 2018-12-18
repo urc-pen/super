@@ -50,7 +50,7 @@ with open(visualizerbinary, mode='rb') as f:
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 janitor.receive_value(args.func, args.SIZE, args.MAXNUM)
 Tumor_cell.prepare_drug(janitor.t)
-
+visualizer.ims = []
 TIME = janitor.t
 redflag = 0
 
@@ -88,7 +88,7 @@ while janitor.n < janitor.MAXNUM and janitor.n > 0:
         cell.update_heatmap(janitor.heatmap)
 
     janitor.append_cell_num()
-    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, janitor.tlist, janitor.onelist, janitor.twolist, plot=False, append=False)
+    visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, janitor.tlist, janitor.onelist, janitor.twolist, plot=False, append=True)
     janitor.count_cell_num()
     janitor.count_type()
     if janitor.cell_two_num >= 50000 and redflag == 0:
@@ -110,3 +110,5 @@ TXTTIME = str(janitor.n) + "_" + str(TIME) + "_" + str(ENDTIME) + "_" + str(REDT
 
 with open(timepre, mode='w') as f:
     f.write(TXTTIME)
+
+visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
