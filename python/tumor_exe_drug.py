@@ -91,7 +91,7 @@ while janitor.n < janitor.MAXNUM and janitor.n > 0:
     visualizer.plot_append_heatmap_graph(janitor.heatmap, janitor.t, janitor.tlist, janitor.onelist, janitor.twolist, plot=False, append=True)
     janitor.count_cell_num()
     janitor.count_type()
-    if janitor.cell_two_num >= 50000 and redflag == 0:
+    if janitor.cell_two_num >= 10000 and redflag == 0:
         REDTIME = janitor.t
         redflag = 1
     janitor.t += 1
