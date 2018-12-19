@@ -21,7 +21,7 @@ class Plotter:
                 firstdict = {str(varno):0}
                 seconddict.update(firstdict)
 
-                varno = math.floor(varno / 2)
+                varno = int(math.floor(varno / 2))
 
                 if varno == 1:
                     thirddict = {"cell" + str(columnno):seconddict}
@@ -94,14 +94,14 @@ class Plotter:
         for i in range(0, length):
             varno = new_idlist[i]
             while varno != 1:
-                varno = math.floor(varno / 2)
+                varno = int(math.floor(varno / 2))
                 new_idlist.append(varno)
         new_idlist = np.sort(list(set(new_idlist)))
         newick = "id1"
         for i in new_idlist:
             idx = "id" + str(i)
-            new1 = i * 2
-            new2 = i * 2 + 1
+            new1 = int(i * 2)
+            new2 = int(i * 2 + 1)
             type1 = 0
             type2 = 0
             if new1 in new_idlist and new2 in new_idlist:
