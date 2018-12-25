@@ -35,7 +35,7 @@ parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="
 parser.add_argument("--MTRATE", "-mt", default=0.0000005, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="10,8")
 parser.add_argument("--EFFECT", "-ef", default=0.28, type=float)
-parser.add_argument("--PID", "-pi", default=15031)
+parser.add_argument("--PID", "-pi", default=30189)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
@@ -94,18 +94,14 @@ if args.funcM == "mortal1":
 if args.funcM == "mortal2":
     para = pid + "_" + str(args.PID) + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2) + "d" + str(args.DRUGTIMES) + "e" + str(args.EFFECT)
 
+janitor.list_adjust()
+janitor.make_idlist()
+
 binary_fix = homedir + "/binary/" + pid
-janitorbinary = binary_fix + "_janitor.binaryfile"
+janitorbinary = binary_fix + "_debugjanitor.binaryfile"
 with open(janitorbinary, mode='wb') as f:
     pickle.dump(janitor, f)
 
-x = "debugdekita"
-timepre = homedir + "/binary/" + pid + ".txt"
-with open(timepre, mode='w') as f:
-    f.write(x)
-
-janitor.list_adjust()
-janitor.make_idlist()
 Plotter.receive_value(args.POISSON)
 Plotter.plot_mutation(janitor.idlist, janitor.driver_list)
 newicktxt = homedir + "/newick" + pid + ".txt"
