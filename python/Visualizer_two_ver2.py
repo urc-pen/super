@@ -15,13 +15,13 @@ class Visualizer_two(Visualizer):
         if mode == "drug":
             self.mode = "drug"
             self.colors = [(1, 1, 1), (0.2, 0.8, 1), (0.8, 0.1, 0.2)]
-            self.label1 = "1: no Drug-resistant"
-            self.label2 = "2: Drug-resistant mutations"
+            self.label1 = "no Drug-resistant mutations"
+            self.label2 = "Drug-resistant mutations"
         if mode == "driver":
             self.mode = "driver"
             self.colors = [(1, 1, 1), (0.2, 0.8, 1), (0.5, 0.8, 0.2)]
-            self.label1 = "1: no driver mutation"
-            self.label2 = "2: driver mutation"
+            self.label1 = "no driver mutations"
+            self.label2 = "driver mutations"
 
     def first_heatmap_graph(self, heatmap, tlist, onelist, twolist):
         self.fig = plt.figure(figsize=(10, 5))
