@@ -34,8 +34,8 @@ parser.add_argument("--WEIGHT2", "-we2", default=0.98, type=float)
 parser.add_argument("--funcM", "-fuM", choices=["mortal1", "mortal2"], default="mortal2")
 parser.add_argument("--MTRATE", "-mt", default=0.0000005, type=float)
 parser.add_argument("--DRUGTIMES", "-dr", default="10,0")
-parser.add_argument("--EFFECT", "-ef", default=0.5, type=float)
-parser.add_argument("--PID", "-pi")
+parser.add_argument("--EFFECT", "-ef", default=0.28, type=float)
+parser.add_argument("--PID", "-pi", default=30189)
 parser.add_argument("--POISSON", "-po", default=10, type=float)
 args = parser.parse_args()
 
@@ -53,7 +53,8 @@ Tumor_cell.prepare_drug(janitor.t)
 visualizer.ims = []
 TIME = janitor.t
 redflag = 0
-
+cellnumlist = []
+cellnumlist.append(janitor.n)
 while janitor.n < janitor.MAXNUM and janitor.n > 0:
 
     for cell in janitor.celllist:
@@ -95,6 +96,7 @@ while janitor.n < janitor.MAXNUM and janitor.n > 0:
         REDTIME = janitor.t
         redflag = 1
     janitor.t += 1
+    cellnumlist.append(janitor.n)
 
 ENDTIME = janitor.t
 
@@ -108,7 +110,10 @@ RESULT = ENDTIME - TIME
 RESULT2 = REDTIME - TIME
 TXTTIME = str(janitor.n) + "_" + str(TIME) + "_" + str(ENDTIME) + "_" + str(REDTIME) + "_" + str(RESULT) + "_" + str(RESULT2)
 
+maped_cellnumlist = map(str, cellnumlist)
+str_cellnumlist = ",".join(maped_cellnumlist)
+
 with open(timepre, mode='w') as f:
-    f.write(TXTTIME)
+    f.write(str_cellnumlist)
 
 visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
