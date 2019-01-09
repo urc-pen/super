@@ -54,7 +54,13 @@ visualizer.ims = []
 TIME = janitor.t
 redflag = 0
 cellnumlist = []
+cell1numlist = []
+cell2numlist = []
+
 cellnumlist.append(janitor.n)
+cell1numlist.append(janitor.cell_one_num)
+cell2numlist.append(janitor.cell_two_num)
+
 while janitor.n < janitor.MAXNUM and janitor.n > 0:
 
     for cell in janitor.celllist:
@@ -97,6 +103,8 @@ while janitor.n < janitor.MAXNUM and janitor.n > 0:
         redflag = 1
     janitor.t += 1
     cellnumlist.append(janitor.n)
+    cell1numlist.append(janitor.cell_one_num)
+    cell2numlist.append(janitor.cell_two_num)
 
 ENDTIME = janitor.t
 
@@ -113,7 +121,14 @@ TXTTIME = str(janitor.n) + "_" + str(TIME) + "_" + str(ENDTIME) + "_" + str(REDT
 maped_cellnumlist = map(str, cellnumlist)
 str_cellnumlist = ",".join(maped_cellnumlist)
 
+maped_cell1numlist = map(str, cell1numlist)
+str_cell1numlist = ",".join(maped_cell1numlist)
+
+maped_cell2numlist = map(str, cell2numlist)
+str_cell2numlist = ",".join(maped_cell2numlist)
+
+str_numlist = str_cellnumlist + "//" + str_cell1numlist + "//" + str_cell2numlist
 with open(timepre, mode='w') as f:
-    f.write(str_cellnumlist)
+    f.write(str_numlist)
 
 visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)

@@ -42,8 +42,8 @@ class Visualizer_two(Visualizer):
             defheatmap[0, n] = n
         self.ax2.imshow(defheatmap, cmap=self.cm)
         self.ax1.legend(loc='lower right', bbox_to_anchor=(1.8,-0.1))
-        self.ax1.set_title('The number of cell type')
-        self.ax2.set_title('Cell simuration')
+        self.ax1.set_title('Number of cells for each type')
+        self.ax2.set_title('Cell location heatmap')
 
     def plot_append_heatmap_graph(self, heatmap, t, tlist, onelist, twolist, plot=False, append=True):
             if plot == True or append == True:
