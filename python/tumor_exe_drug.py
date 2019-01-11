@@ -50,7 +50,7 @@ with open(visualizerbinary, mode='rb') as f:
 Tumor_cell.receive_value(args.AVERAGE, args.DISPERSION, args.AROUND, args.WEIGHT1, args.WEIGHT2, args.MTRATE, args.DRUGTIMES, args.EFFECT)
 janitor.receive_value(args.func, args.SIZE, args.MAXNUM)
 Tumor_cell.prepare_drug(janitor.t)
-visualizer.ims = []
+
 TIME = janitor.t
 redflag = 0
 cellnumlist = []
