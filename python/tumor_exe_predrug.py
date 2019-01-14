@@ -82,7 +82,7 @@ if args.funcM == "mortal1":
 if args.funcM == "mortal2":
     para = pid + "m2_" + "ad" + str(args.AVERAGE) + "_" + str(args.DISPERSION) + "r" + str(args.AROUND) + "mt" + str(args.MTRATE) + "w" + str(args.WEIGHT1) + "_" + str(args.WEIGHT2)
 
-visualizer.save_heatmap_graph("pic", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
+visualizer.save_heatmap_graph("anime", para, janitor.heatmap, janitor.tlist, janitor.onelist, janitor.twolist)
 
 binary_fix = homedir + "/binary/" + pid
 janitorbinary = binary_fix + "_janitor.binaryfile"
