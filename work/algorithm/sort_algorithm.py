@@ -22,3 +22,15 @@ while flag == 1:
             a[i], a[i-1] = a[i-1], a[i]
             flag = 1
             print(a)
+
+#selection sort
+n = int(input())
+a = list(map(int, input().split()))
+
+for i in range(0, n):
+    minj = i
+    for j in range(i, n):
+        if a[j] < a[minj]:
+            minj = j
+    a[i], a[minj] = a[minj], a[i]
+    print(a)
