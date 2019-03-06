@@ -19,8 +19,6 @@ while flag == 1:
     flag = 0
     for i in range(n-1, 0, -1):
         if a[i] < a[i-1]:
-            v = a[i]
-            a[i] = a[i-1]
-            a[i-1] = v
+            a[i], a[i-1] = a[i-1], a[i]
             flag = 1
             print(a)
